@@ -1,6 +1,10 @@
 @charset "UTF-8";
 /* 모바일용 스타일지정 시작  */
-body {font-size:14px;}/*부트스트랩css영향을 받은 것을 무효화시키고, 사용자css로 적용*/
+body {/*reset에서 초기화 된 것을 재정의 할 때*/
+	font-size:14px;
+	background:#fff;
+	line-height:1.4;/*상속 바로 전에 적용한 값을 초기화inherit=initial(크로스브라우징이안됨) 시키는 역할*/
+	}/*부트스트랩css영향을 받은 것을 무효화시키고, 사용자css로 적용*/
 /* 헤더영역 시작 */
 .header {
 height:80px;
@@ -67,7 +71,7 @@ color:#fff;
 /* 본분섹션 슬라이드영역 끝 */
 /* 푸터영역 시작 */
 .footer {
-margin-top:30px;
+padding-top:30px;/*margin-top 작동을 하지 않아서 padding-top으로 변경*/
 }
 .footer p {
 margin: 21px 0px;
@@ -150,7 +154,7 @@ opacity:0;
 transition:all 0.3s;/*화면전환 옵션 transform 모양변화에대한 화면전환옵션, width, height등등 all... */
 }
 .work-section li a:hover .info{
-opacity:8 1;
+opacity:1;
 transform:translateY(20px);/*모양이 변화할때 Y세로축으로 20px 이동합니다.*/
 }
 .info h2 {
@@ -168,8 +172,9 @@ margin-top:30px;
 }
 .blog-section h1{
 text-align:center;
-font-size:30px;
+font-size:42px;
 color:#3f51b5;
+font-weight:normal;
 }
 .blog-section .container{width:90%;margin:0 auto;}
 .blog-section li {
