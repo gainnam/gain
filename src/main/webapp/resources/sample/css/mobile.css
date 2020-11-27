@@ -5,6 +5,10 @@ body {/*reset에서 초기화 된 것을 재정의 할 때*/
 	background:#fff;
 	line-height:1.4;/*상속 바로 전에 적용한 값을 초기화inherit=initial(크로스브라우징이안됨) 시키는 역할*/
 	}/*부트스트랩css영향을 받은 것을 무효화시키고, 사용자css로 적용*/
+	/*부트스트랩css영향을 받는 부분을 무효화 시키기(아래)*/
+ul {
+	margin-bottom: inherit !important;/*css위치와 상관없이 무조건, 중요하게 적용*/
+	}
 /* 헤더영역 시작 */
 .header {
 height:80px;
