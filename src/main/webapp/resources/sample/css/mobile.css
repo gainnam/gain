@@ -1,9 +1,12 @@
 @charset "UTF-8";
+ @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 /* 모바일용 스타일지정 시작  */
-body {/*reset에서 초기화 된 것을 재정의 할 때*/
+body {/*부트스트랩css또는 reset.css에서 초기화 된 것을 재정의 할 때*/
 	font-size:14px;
 	background:#fff;
-	line-height:1.4;/*상속 바로 전에 적용한 값을 초기화inherit=initial(크로스브라우징이안됨) 시키는 역할*/
+	line-height:1.4 !important;/*상속 바로 전에 적용한 값을 초기화inherit=initial(크로스브라우징이안됨) 시키는 역할*/
+	font-family: 'Nanum Gothic', 'NanumGothic' !important;
 	}/*부트스트랩css영향을 받은 것을 무효화시키고, 사용자css로 적용*/
 	/*부트스트랩css영향을 받는 부분을 무효화 시키기(아래)*/
 ul {
@@ -76,6 +79,7 @@ color:#fff;
 /* 푸터영역 시작 */
 .footer {
 padding-top:30px;/*margin-top 작동을 하지 않아서 padding-top으로 변경*/
+background:mistyrose;
 }
 .footer p {
 margin: 21px 0px;
