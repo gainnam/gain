@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+<!-- jstl은 jsp의 표준태그 라이브러리 입니다. java standard tag tag library -->
 <%@ include file="../include/header.jsp" %>
 
 <!-- 대시보드 본문 Content Wrapper. Contains page content -->
@@ -45,7 +46,11 @@
 						<div class="card-body">
 							<strong><i class="fas fa-book mr-1"></i>user_id</strong>
 
-							<p class="text-muted">admin</p>
+							<p class="text-muted">
+							<!-- jsp에서 java변수(저장소)를 사용하는 방법 $ user_id2로 시작합니다. -->
+							<%--${user_id2} --%>
+							<c:out value="${user_id2}"></c:out>
+							</p>
 
 							<hr>
 
