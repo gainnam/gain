@@ -22,9 +22,8 @@ public class ClassApp {
 		developement.doJob();*/
 		GraphicObject graphicobject = new Triangle();
 		graphicobject.draw();
-		
+	}
 
-}
 //추상클래스에 대한 연습(아래)
 //추상클래스 또는 인터페이스를 사용하는 목적은 두꺼운 책에서 목차를 만드는 것과 똑같은 역할.
 abstract class GraphicObject {
@@ -37,8 +36,10 @@ abstract class GraphicObject {
 	abstract void draw4();
 	abstract void draw5();
 }
-class Triangle extends GraphicObject {
 
+
+class Triangle extends GraphicObject {
+	//매서드 오버라이드(메서드 이름이 같은 것을 상속관계에서 실행)= 매서드 재정의, 대표적인 다형성을 구현
 	@Override
 	void draw() {
 		System.out.println("  *");
@@ -61,7 +62,6 @@ class Salesman extends Employee {
 	public Salesman( ) {//클래스명과 똑같은 매서드를 생성자 메서드 라고 합니다.
 		szDept = "판매 부서";//부모클래스  Employee의 szDept멤버변수를 자식클래스에서도 사용가능
 	}
-	
 	public void doJob() {
 		System.out.println("환영합니다." + szDept + "입니다.");
 	}
@@ -75,7 +75,6 @@ class Development extends Employee {
 		System.out.println("환영합니다." + szDept + "입니다.");
 	}
 }
-
 class Circle {
 	private int r;//멤버변수 반지름 이클래스에서 전연변수
 	public Circle(int a) {//생성자메서드a인자=매개변수=파라미터 값은 new키워드로 오브젝트 만들어질 때 발생
@@ -84,4 +83,8 @@ class Circle {
 	public double getgainnam() {
 		return r*r*3.14;//원의 넓이를 반환
 	}
+}
+}
+
+	
 			
