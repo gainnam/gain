@@ -36,7 +36,11 @@ public class ExceptionTest {
 			//아래처럼 예외처리를 하면, 프로그램이 종료되지않고, 예외에 대한 메세지 출력하며 계속 실행함.
 			try {
 				indexValue = Integer.parseInt(stringArray[cnt]);
-			} catch (Exception e) {
+			}catch (ARrayIndex e) {
+				System.out.println("에러메세지 출력 = " + e.toString());
+				System.out.println("개발자가 지정한 에러메세지는 숫자 변환 시 에러가 발생 되었음.");
+			} 
+			catch (Exception e) {
 				System.out.println("에러메세지 출력 = " + e.toString());
 				System.out.println("개발자가 지정한 에러메세지는 숫자 변환 시 에러가 발생 되었음.");
 			} finally {
