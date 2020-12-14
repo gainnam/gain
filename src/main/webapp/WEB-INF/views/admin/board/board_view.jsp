@@ -1,137 +1,10 @@
-<!-- 관리자단 헤더 시작 header.jsp -->
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>관리자 | Dashboard</title>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="../include/header.jsp" %>
 
-<!-- Google Font: Source Sans Pro -->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-<!-- Font Awesome -->
-<link rel="stylesheet"
-	href="/resources/plugins/fontawesome-free/css/all.min.css">
-<!-- Ionicons -->
-<link rel="stylesheet"
-	href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-<!-- Tempusdominus Bootstrap 4 -->
-<link rel="stylesheet"
-	href="/resources/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
-<!-- iCheck -->
-<link rel="stylesheet"
-	href="/resources/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-<!-- JQVMap -->
-<link rel="stylesheet" href="/resources/plugins/jqvmap/jqvmap.min.css">
-<!-- Theme style -->
-<link rel="stylesheet" href="/resources/dist/css/adminlte.min.css">
-<!-- overlayScrollbars -->
-<link rel="stylesheet"
-	href="/resources/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-<!-- Daterange picker -->
-<link rel="stylesheet"
-	href="/resources/plugins/daterangepicker/daterangepicker.css">
-<!-- summernote -->
-<link rel="stylesheet"
-	href="/resources/plugins/summernote/summernote-bs4.min.css">
-</head>
-<body class="hold-transition sidebar-mini layout-fixed">
-	<div class="wrapper">
-
-		<!-- 관리자화면 최상단 아이콘2개 Navbar -->
-		<nav
-			class="main-header navbar navbar-expand navbar-white navbar-light">
-			<!-- Left navbar links -->
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" data-widget="pushmenu"
-					href="#" role="button"><i class="fas fa-bars"></i></a></li>
-			</ul>
-
-			<!-- Right navbar links -->
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item"><a class="nav-link"
-					data-widget="control-sidebar" data-slide="true" href="#"
-					role="button"> <i class="fas fa-th-large"></i>
-				</a></li>
-			</ul>
-		</nav>
-		<!-- /.navbar -->
-
-		<!-- 관리자화면 왼쪽메뉴부분 Main Sidebar Container -->
-		<aside class="main-sidebar sidebar-dark-primary elevation-4">
-			<!-- 관리자 상단로고 Brand Logo -->
-			<a href="home.html" class="brand-link"> <img
-				src="/resources/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
-				class="brand-image img-circle elevation-3" style="opacity: .8">
-				<span class="brand-text font-weight-light">Spring 프로젝트</span>
-			</a>
-
-			<!-- 왼쪽메뉴 Sidebar -->
-			<div class="sidebar">
-				<!-- 로그인한 사용자표시 Sidebar user panel (optional) -->
-				<div class="user-panel mt-3 pb-3 mb-3 d-flex">
-					<div class="image">
-						<img src="/resources/dist/img/default-150x150.png"
-							class="img-circle elevation-2" alt="User Image">
-					</div>
-					<div class="info">
-						<a href="#" class="d-block">관리자</a>
-					</div>
-				</div>
-
-				<!-- 검색폼 SidebarSearch Form -->
-				<div class="form-inline">
-					<div class="input-group" data-widget="sidebar-search">
-						<input class="form-control form-control-sidebar" type="search"
-							placeholder="Search" aria-label="Search">
-						<div class="input-group-append">
-							<button class="btn btn-sidebar">
-								<i class="fas fa-search fa-fw"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-
-				<!-- 사용자 홈과 대시보드 메뉴 Sidebar Menu -->
-				<nav class="mt-2">
-					<ul class="nav nav-pills nav-sidebar flex-column"
-						data-widget="treeview" role="menu" data-accordion="false">
-						<li class="nav-item"><a href="/" class="nav-link"> <i
-								class="nav-icon fas fa-th"></i>
-								<p>
-									사용자 홈 <span class="right badge badge-danger">New</span>
-								</p>
-						</a></li>
-						<!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-						<li class="nav-item menu-open"><a href="#"
-							class="nav-link active"> <i
-								class="nav-icon fas fa-tachometer-alt"></i>
-								<p>
-									Dashboard <i class="right fas fa-angle-left"></i>
-								</p>
-						</a>
-							<ul class="nav nav-treeview">
-								<li class="nav-item"><a href="./member_list.html"
-									class="nav-link"> <!-- 위 메뉴선택시 활성화active 되는 것은 j쿼리로 만들예정입니다. -->
-										<i class="far fa-circle nav-icon"></i>
-										<p>관리자 관리</p>
-								</a></li>
-								<li class="nav-item"><a href="./board_list.html"
-									class="nav-link"> <i class="far fa-circle nav-icon"></i>
-										<p>게시물 관리</p>
-								</a></li>
-							</ul></li>
-
-					</ul>
-				</nav>
-				<!-- /.sidebar-menu -->
-			</div>
-			<!-- /.sidebar -->
-		</aside>
-		<!-- 관리자단 헤더 끝 -->
-
-		<!-- 대시보드 본문 Content Wrapper. Contains page content -->
+	<!-- 대시보드 본문 Content Wrapper. Contains page content -->
 		<div class="content-wrapper">
 			<!-- 본문헤더 Content Header (Page header) -->
 			<div class="content-header">
@@ -173,20 +46,29 @@
 								<div class="card-body">
 									<strong><i class="fas fa-book mr-1"></i>title</strong>
 
-									<p class="text-muted">첫 번째 게시물 제목</p>
+									<p class="text-muted">
+									<!-- 아래와 같은 출력형태는 EL(Express Language)표시라고 합니다. -->
+									<%-- ${boardVO.title} --%>
+									<!-- 위 자바의 EL출력은 보안에 취약하기 때문에 아래처럼 처리함. -->
+									<c:out value="${boardVO.title}"></c:out>
+									</p>
 
 									<hr>
 
 									<strong><i class="fas fa-map-marker-alt mr-1"></i>
 										content</strong>
 
-									<p class="text-muted">첫 번째 게시물 내용 줄바꿈 테스트</p>
+									<p class="text-muted">
+									${boardVO.content}
+									</p>
 									<!-- 부트스트랩 mr-1오른쪽 여백주기 클래스명(margin-right:.25rem !important;-->
 									<hr>
 
 									<strong><i class="far fa-user mr-1"></i>작성자</strong>
 
-									<p class="text-muted">admin</p>
+									<p class="text-muted">
+									<c:out value="${boardVO.writer}"></c:out>
+									</p>
 
 									<hr>
 
@@ -204,11 +86,9 @@
 
 							<!-- 버튼영역 시작 -->
 							<div class="card-body">
-								<a href="member_list.html" class="btn btn-primary float-right">LIST
-									ALL</a> <a href="member_write.html"
-									class="btn btn-danger float-right mr-1">DELETE</a> <a
-									href="member_write.html"
-									class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
+								<a href="/admin/board/board_write" class="btn btn-primary float-right">LIST
+									ALL</a> <button class="btn btn-danger float-right mr-1">DELETE</button> 
+									<a href="/admin/board/board_write?bno=${boardVO.bno}" class="btn btn-warning float-right mr-1 text-white">UPDATE</a>
 							</div>
 							<!-- 버튼영역 끝 -->
 							<!-- 댓글영역 시작 -->
@@ -220,15 +100,15 @@
 
 									<div class="card-body">
 										<div class="form-group">
-											<label for="writer">writer</label> <input type="text"
-												class="form-control" name="writer" id="writer"
+											<label for="replyer">Replyer</label> <input type="text"
+												class="form-control" name="replyer" id="replyer"
 												placeholder="작성자를 입력해 주세요." required>
 											<!-- 폼에서 input같은 입력태그에는 name속성이 반드시 필요, 이유는 DB에 입력할때,
 	                    	 값을 전송하게 되는데, 전송값을 담아두는 이름이 name가 되고, 위에서는 writer 입니다. -->
 										</div>
 										<div class="form-group">
-										<label for="reply_text">reply_text</label> <input type="text"
-												class="form-control" name="reply_text" id="reply_text"
+										<label for="replytext">Reply_text</label> <input type="text"
+												class="form-control" name="replytext" id="replytext"
 												placeholder="내용을 입력해 주세요." required>
 											<!-- 게시판에서는 폼을 전송할 때  submit타입을 사용하지만, 댓글은 Ajax로 전송하기 때문에, button타입으로 함 -->
 										</div>
@@ -298,65 +178,11 @@
 		</div>
 		<!-- /.content-wrapper -->
 
-		<!-- 관리자단 푸터 시작 footer.jsp -->
-		<footer class="main-footer">
-			<strong>Copyright &copy; 2014-2020 <a
-				href="https://adminlte.io">AdminLTE.io</a>.
-			</strong> All rights reserved.
-			<div class="float-right d-none d-sm-inline-block">
-				<b>Version</b> 3.1.0-rc
-			</div>
-		</footer>
+<%@ include file="../include/footer.jsp" %>
 
-
-		<!-- 로그아웃 영역 Control Sidebar -->
-		<aside class="control-sidebar control-sidebar-dark">
-			<!-- Control sidebar content goes here -->
-		</aside>
-		<!-- /.control-sidebar -->
-	</div>
-	<!-- ./wrapper -->
-
-	<!-- jQuery -->
-	<script src="/resources/plugins/jquery/jquery.min.js"></script>
-	<!-- jQuery UI 1.11.4 -->
-	<script src="/resources/plugins/jquery-ui/jquery-ui.min.js"></script>
-	<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-	<script>
-		$.widget.bridge('uibutton', $.ui.button)
-	</script>
-	<!-- Bootstrap 4 -->
-	<script src="/resources/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<!-- ChartJS -->
-	<script src="/resources/plugins/chart.js/Chart.min.js"></script>
-	<!-- Sparkline -->
-	<script src="/resources/plugins/sparklines/sparkline.js"></script>
-	<!-- JQVMap -->
-	<script src="/resources/plugins/jqvmap/jquery.vmap.min.js"></script>
-	<script src="/resources/plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
-	<!-- jQuery Knob Chart -->
-	<script src="/resources/plugins/jquery-knob/jquery.knob.min.js"></script>
-	<!-- daterangepicker -->
-	<script src="/resources/plugins/moment/moment.min.js"></script>
-	<script src="/resources/plugins/daterangepicker/daterangepicker.js"></script>
-	<!-- Tempusdominus Bootstrap 4 -->
-	<script
-		src="/resources/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-	<!-- Summernote -->
-	<script src="/resources/plugins/summernote/summernote-bs4.min.js"></script>
-	<!-- overlayScrollbars -->
-	<script
-		src="/resources/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
-	<!-- AdminLTE App -->
-	<script src="/resources/dist/js/adminlte.js"></script>
-	<!-- AdminLTE for demo purposes -->
-	<script src="/resources/demo.js"></script>
-	<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-	<script src="/resources/dist/js/pages/dashboard.js"></script>
-	
-	<!-- 자바스크립트용 #template element 제작(아래) jstl의 향상된 for문과 같은 역할
+	<%--  자바스크립트용 #template element 제작(아래) jstl의 향상된 for문과 같은 역할
 	jstl을 사용하려면, .jsp에서 <%@ taglib url=...처럼 외부 core을 가져와서 사용한 것처럼
-	자바스크립트에서도 외부 core를 가져와야 합니다.-->
+	자바스크립트에서도 외부 core를 가져와야 합니다. --%>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 	<!-- 댓글템플릿(빵틀)만들기(아래) -->
@@ -395,11 +221,12 @@
 								//Ajax를 이용해서, 화면을 representation(REST-API방식) 부분 화면을 재구현(아래)
 								$.ajax({//통신프로그램.데이터왔다갔다함
 									//여기서부터는 프론트 엔드 개발자 영역
-									type : 'get',//지금은html이라서 get방식이지만, jsp로 가면, post방식으로 바꿔야함
-									url : 'board_view.html',//jsp로 가면, ReplyController만들어서 거기서 생성한 RequestMapping에서 지정한 url로 바꿀꺼임!
+									type : 'post',//지금은html이라서 get방식이지만, jsp로 가면, post방식으로 바꿔야함
+									url : '/reply/reply_write',//jsp로 가면, ReplyController만들어서 거기서 생성한 RequestMapping에서 지정한 url로 바꿀꺼임!
 									//바꾸는 건 백엔드영역
 									dataType : 'text',//ReplyController에서 받은 데이터의 형식은 text형식으로 받겠다는 걸 명시
 									success : function(result) {//통신이 성공하면(상태가 200(HTTP성공응답)이 되면), 위 경로에서 반환받은 result 데이터(json텍스트)를 
+										alert(result);
 										//지금은 html이라서 result값을 이용할 수가 없어서 댓글 더미데이터를 만듭니다.(아래)
 										result = [
 										//{rno:댓글번호, bno:게시물번호,replytext:첫 번째 댓글",replyer:"admin", regdate:타임스탬프}
@@ -462,13 +289,10 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary">수정</button>
-					<button type="button" class="btn btn-danger">삭제</button>
+					<button type="button" class="btn btn-primary" id="udpateReplyBtn">수정</button>
+					<button type="button" class="btn btn-danger" id="deleteReplyBtn">삭제</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- //.Modal -->
-</body>
-</html>
-<!-- 관리자단 푸터 끝 -->
+

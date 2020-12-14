@@ -6,20 +6,87 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
+
+import org.edu.util.SecurityCode;
+import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 //스프링에서 사용가능한 클래스를 빈(커피Bean)이라고 하고, @Contorller 클래스를 사용하면 됨.
 @Controller
 public class AdminController {
+	//@Inject 의존성 주입방식DI(Dependency Inject)으로 외부 라이브러리 모듈 믈래스 인스턴스 갖다쓰기(아래)
+	@Inject
+	SecurityCode securityCode;
 	
+	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.GET)
+	public String board_write() throws Exception {
+		return "admin/board/board_write";
+	}
+	@RequestMapping(value="/admin/board/board_write", method=RequestMethod.POST)
+	public String board_write(MultipartFile file, BoardVO boardVO) throws Exception {
+		//post로 받은 boardVO내용을 DB서비스에 입력하면 됨.
+		//DB에 입력 후 새로고침명령으로 게시물테러를 당하지 않으려면, redirect로 이동처리 합니다.(아래)
+		return "redirect:/admin/board/board_list";
+	}
+	
+	@RequestMapping(value="/admin/board/board_view",method=RequestMethod.GET)
+	public String board_view(@RequestParam("bno") Integer bno, Model model) throws Exception {
+		//jsp로 보낼 더미테이터 memberVO에 담아서 보냄.
+		//실제로는 아래처럼 더미데이터를 만드는 것이 아닌
+		//쿼리스트링(질의문자열)로 받아온 bno(게시물 고유번호)를 이용해서 DB에서
+		//select * from tbl_board where bno = ? 마이바티스 실행이 된 결과값이 List<BoardVO>형으로 받아서 jsp보내줌.
+		
+		BoardVO boardVO = new BoardVO();
+		boardVO.setBno(1);
+		boardVO.setTitle("첫 번째 게시물 입니다.");
+		String xss_data = "첫 번째 내용입니다.<br>줄바꿈을 했습니다. <script>alert('메롱');</script>";		boardVO.setContent("첫 번째 내용입니다.<br>줄바꿈 처리입니다.");
+		boardVO.setContent(securityCode.unscript(xss_data));
+		Date regdate = new Date();
+		boardVO.setRegdate(regdate);
+		boardVO.setView_count(2);
+		boardVO.setReply_count(0);
+		model.addAttribute("boardVO", boardVO);
+		return "admin/board/board_view";
+		
+	}
 	@RequestMapping(value="/admin/board/board_list",method=RequestMethod.GET)
 	public String board_list(Model model) throws Exception {
-		
+		//테스트용 더미 게시판 데이터 만들기(아래)
+		BoardVO input_board = new BoardVO();
+		input_board.setBno(1);
+		input_board.setTitle("첫 번째 게시물 입니다.");
+		String xss_data = "첫 번째 내용입니다.<br>줄바꿈을 했습니다. <script>alert('메롱');</script>";
+		input_board.setContent(securityCode.unscript(xss_data));
+		input_board.setWriter("admin");
+		Date regdate = new Date();
+		input_board.setRegdate(regdate);
+		input_board.setView_count(2);
+		input_board.setReply_count(0);
+		BoardVO[] board_array = new BoardVO[2];
+		//input_board = {1, "첫 번째 게시물 입니다.", "첫 번째 내용입니다.<br>줄바꿈을 했습니다.", "admin", "now()", 2, 0};
+		board_array[0] = input_board;
+		//-----------------------------------------------
+		BoardVO input_board2 = new BoardVO();
+		input_board2.setBno(2);
+		input_board2.setTitle("두 번째 게시물 입니다.");
+		input_board2.setContent("두 번째 내용입니다.<br>줄바꿈을 했습니다.");
+		input_board2.setWriter("user02");
+		input_board2.setRegdate(regdate);
+		input_board2.setView_count(2);
+		input_board2.setReply_count(0);
+		//게시물번호만 2로 변경해서 나머지 값들은 변경없이 아래 1번 레코드에 저장.
+		//input_board = {2, "첫 번째 게시물 입니다.", "첫 번째 내용입니다.<br>줄바꿈을 했습니다.", "admin", "now()", 2, 0};
+		board_array[1] = input_board2;
+		//------------------------------------------------
+		List<BoardVO> board_list = Arrays.asList(board_array);
+		model.addAttribute("board_list", board_list);
 		return "admin/board/board_list";
 	}
 	

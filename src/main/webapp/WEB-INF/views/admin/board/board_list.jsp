@@ -98,16 +98,17 @@
 											</tr>
 											<!-- jstl core를 가져다 쓰는 이유: 향상된 for 반복문을 사용하기 위함 -->
 										</c:forEach>
-											
+										<!-- 	
 											<tr>
 												<td>2</td>
-												<!-- 아래에 a링크 값은  list가 늘어날 수록 bno값이 변하게 된다. 개발자가 jsp처리-->
+												아래에 a링크 값은  list가 늘어날 수록 bno값이 변하게 된다. 개발자가 jsp처리
 												<td><a href="board_view.html?bno=1">두 번째 게시물 제목[0]</a></td>
 												<td>user02</td>
 												<td>2020-12-09</td>
 												<td><span class="badge bg-danger">0</span></td>
-												<!-- 권한표시는 부트스트랩 뺏지 클래스 사용 -->
+												권한표시는 부트스트랩 뺏지 클래스 사용
 											</tr>
+											 -->
 										</tbody>
 									</table>
 								</div>
