@@ -1,5 +1,12 @@
 package kr.or.member;
 
+import org.springframework.stereotype.Component;
+
+/**
+ * 회원정보 관리용 클래스
+ * @author gainnam
+ *
+ */
 public class MemberVO {
 	// 멤버번수 만들기(아래)
 	private String name;

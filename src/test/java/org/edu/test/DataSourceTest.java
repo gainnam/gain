@@ -38,8 +38,8 @@ public class DataSourceTest {
 	@Inject
 	IF_MemberDAO memberDAO;
 	
-	//@Inject//사용하면 안되는 이유: 클래스 상단에 @Controller,@Service, @Repository 이런 내용만 @Inject합니다.
-	//MemberVO memberVO;//기존 자바처럼 new MemberVO()오브젝트를 생성하지않고, 주입해서 사용.(runtime에서 에러가 남)
+	@Inject//사용하면 안되는 이유: 클래스 상단에 @Controller,@Service, @Repository 이런 내용만 @Inject합니다.
+	MemberVO memberVO;//기존 자바처럼 new MemberVO()오브젝트를 생성하지않고, 주입해서 사용.(runtime에서 에러가 남)
 	
 	public String memberPrimaryKey() {
 		//사용자 프라이머리키 생성하는 메서드 년월일시분처 + 밀리초
@@ -52,18 +52,22 @@ public class DataSourceTest {
 	@Test
 	public void updateMember() throws Exception {
 		//CRUD 중 Update 테스트 구현 특징, user_id는 프라이커리키 이기 때문에 수정대상이 아닙니다.
-		MemberVO memberVO = new MemberVO();
-		memberVO.setEmail("test@test.com");
-		memberVO.setUser_name("아무개");
+		//MemberVO memberVO = new MemberVO();
 		memberVO.setUser_id("admin");
+		memberVO.setUser_name("홍길동");
+		memberVO.setUser_pw("");//빈칸으로 보낸다면->암호를 수정하지 않는 사람을 가정하는 것.
+		memberVO.setEmail("test@test.com");
+		memberVO.setPoint(100);
+		memberVO.setEnabled(true);
+		memberVO.setLevels("ROLE_ADMIN");
 		String user_id = memberVO.getUser_id();//memberVO의 오브젝트의 데이터는 1개의 레코드이기때문에 반환값이 1개만
-		
+		memberDAO.updateMember(memberVO);
 	}
 	
 	@Test
 	public void readMember() throws Exception {
 		//CRUD 중 Read 테스트 구현
-		MemberVO memberVO = new MemberVO();
+		//MemberVO memberVO = new MemberVO();
 		memberVO = memberDAO.readMember("admin");
 		System.out.println("admin 에 대한 상세정보 입니다.");
 		System.out.println(memberVO.toString());
@@ -78,7 +82,7 @@ public class DataSourceTest {
 	@Test
 	public void insertMember() throws Exception {
 		//CRUD 중 Create 테스트
-		MemberVO memberVO = new MemberVO();
+		//MemberVO memberVO = new MemberVO();
 		memberVO.setUser_id("user03");
 		memberVO.setUser_name("사용자03");
 		memberVO.setUser_pw("1234");
@@ -91,8 +95,7 @@ public class DataSourceTest {
 	}
 	@Test
 	public void selectMember() throws Exception {
-		List<MemberVO> memberList = 
-		memberDAO.selectMember();
+		List<MemberVO> memberList = memberDAO.selectMember("user_name", "홍");
 		System.out.println("회원리스트 테스트 입니다.");
 		System.out.println("회원리스트 테스트 " + memberList.toString());
 	}
