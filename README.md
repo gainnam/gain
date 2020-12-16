@@ -1,10 +1,523 @@
-#### 20201127(금) 작업예정
-- @김성수  씨(화면설계시험 과제물제출 미응시자), 
+### 기본정보
+- 스프링관리자 AdminLTE템플릿 샘플: 
+- https://adminlte.io/themes/v3/pages/forms/general.html
+- https://kimilguk-mysql.herokuapp.com/ (아이디/암호:admin/user02)
+
+### 스프링 작업순서
+- 스프링 HelloWorld MVC 프로젝트 edu.org.controller 제작OK.
+- wamp(만세아이콘)으로 마리아DB 설치, 사용자암호 추가 및 한글처리OK.
+- 워크벤치 설치 및 ERD 작성연습, 샘플DB(edu)임포트 및 리버스 엔지니어링으로 ERD제작OK.
+- 샘플반응형 웹페이지(mobile,tablet,pc용) 및 J쿼리 페이지 작성OK.
+- 스프링 프로젝트 관리자단 AdminLTE기반으로 제작OK.
+- 스프링 테스트 pom.xml 디펜던시 의존성 추가OK.
+- egov3.9버전 -> 3.10으로 업드레이드OK.
+- junit(JavaUnit) 테스트 설정 후 기본 unit유닛(단위)테스트OK.
+- jdbc(JavaDataBaseConnection)사용 pom.xml 의존성 추가OK.
+- Mysql사용 pom.xml(외부라이브러리 가져다가 사용하는 방식) 의존성 추가OK.
+- 마이바티스 사용(CRUD쿼리를관리하는툴) pom.xml 의존성 추가OK.
+- junit으로 DB접근 후 관리자단 회원관리 CRUD unit테스트 마무리.
+- --------------- 여기까지 ------------------
+- DB 디버그용 드라이버 사용 pom.xml 의존성 추가.
+- 스프링 AOP(관점지향프로그래밍-OOP의 확장기능)기능으로 개발용 디버그출력환경 만들기.
+- 실제 회원관리 화면 CRUD 적용.
+- 실제 게시판 화면 CRUD 적용.
+- 파일업로드 라이브러리 사용 pom.xml 의존성 추가.
+- 게시판 업로드 화면 구현.
+- Json데이터 사용 pom.xml 의존성 추가.
+- 실제 댓글 화면CRUD적용.(우리가 만들어서 제공 Rest-API백엔드단)
+- 사용자단 html(https://miniplugin.github.io/) 소스를 커스터마이징 후 jsp로 만들기.
+- 스프링시큐리티 로그인 구현 pom.xml 의존성 추가(회원가입시 패스워드 암호화 추가).
+- 헤로쿠 클라우드로 배포(Hsql데이터베이스사용).
+- 사용자단 CRUD 구현.
+- 오라클로 마이그레이션 작업.
+- 이후 유효성검사, 파스타클라우드, 네이버아이디 로그인(네이버에서 제공Rest-API백엔드단) 사용 등등. pom.xml 의존성 추가.
+
+#### 20201215(화) 작업
+- 인터페이스 영역(메서드명세파일-이름만존재) -implements- 임플리먼트 클래스(메서드구현파일-오버라이드된메서드명구현내용)
+- 메서드명세 메서드명 -> 오버라이드된 메서드명
+- 멘토수업신청자리스트(누락되신분은 나중에라도 말씀해 주세요.)
+
+```
+강민우
+김범주
+김수연
+김진아
+남가인
+박정수
+배경득
+신승만
+양희망
+유우식
+이규혁
+이병현
+이시은
+이용오
+이찬홍
+이현진
+이현진
+정도영
+정동규
+황초희
+```
+- 이클립스에서 입력힌트 나오지 않을때 조치
+window> preference> java > editor > content Assist > advanced > 체크 java Non-Type Proposals > Apply버튼클릭.
+- 자바에서 상속이라는 개념도 html css에서 나오는 상속이랑 비슷한 개념인가요?
+- html, css에서 사용되는 상속개념 - 자바(C#)언어에서 차용해서 쓰는 개념입니다.
+- 워크벤치쿼리실행참조->mapper쿼리->DAO클래스호출->Service클래스호출->[컨트롤러호출->jsp]=JUnit테스트
+- ->[DAO클래스호출->Service클래스호출]=1개의 클래스 사용 스프링BOOT방식(소규모프로젝트용)
+- DAO, Service를 2개 클래스로 나눈이유 1, 현업에서 사용되는 솔루션들이 2개로 클래스를 나눈 구조 입니다.
+- 위와 구조를 사용하는 근본적인 이유는, DB엑세스하는 부분은 최소화(1개) - DAO을 호출하는 서비스는 다수(10개)
+- 사용예, selectMember() DAO클래스에 메서드 1개.
+- DAO.selectMember() 호출하는 서비스는 관리자단서비스에서 호출, 사용자단서비스에서 호출 (1:2)
+- JUnit 자바단위테스트 Insert(), Update(), Delete() 회원관리부분 예정.
+
+#### 20201214(월) 작업
+- ibatis(아이바티스-쿼리생성이불편) -> mybatis(마이바티스-쿼리생성이편리)
+- 지금하시는 작업은 개발시작전 준비단계....
+- JUnit테스트(자바단위테스트): 하는목적은 jsp(컨트롤러) 힘빼기전에 CRUD테스트해보고 힘빼라는 작업방식.
+- jsp -> controller -> service -> dao -> mapper.xml -> DB(Mysql,Oracle)
+- 자바단위테스트(JUnit) -> service -> dao -> mapper.xml -> DB
+- 톰캣/JUnit 실행해야만, DB가 연동이 됩니다.
+- 톰캣이 종료되거나, JUnit테스트가 끝나면, DB연동이 끊어집니다.
+- JUnit테스트 준비OK.
+- 데이터베이스 접속 테스트.(아래)
+- 데이터베이스 사용 라이브러리 추가(pom.xml)
+- 스프링 테스트 pom.xml 디펜던시 의존성 추가
+- 의존성추가1. jdbc(Java Database Connection)모듈추가 후 설정 필수.
+- 의존성추가2. Mysql 모듈추가 후 설정.
+- ====================================
+- 위 2가지로 스프링에서 데이터베이스 커넥션 처리 , DriverManagerDataSource (DB커넥션)
+- ====================================
+- 의존성추가3. jdbc와 Mysql데이터베이스 중간에 쿼리를 사용하는 역할 Mybatis 모듈추가 후 설정 필수.
+- 위 의존성 마이바티스로 스프링에서 쿼리를 관리하는 처리 , sqlSessionFactory (쿼리생성)
+- ====================================
+- 마이바티스에는 Select(), Insert(), Update(), Delete()쿼리를 수행하는 메서드들.
+- 위 의존성 Mybatis로 스프링에서 쿼리를 호출하는 메서드명(인터페이스)을 처리, sqlSessionTemplate(쿼리호출메서드명)
+- ====================================
+
+DataSource(커넥션)-sqlSessionFactory(쿼리생성)-sqlSessionTemplate(쿼리호출메서드)
+
+- 서블렛버전을 2.5 -> 3.0.1로변경 필수(아래)
+
+```
+<dependency>
+	<groupId>javax.servlet</groupId>
+	<artifactId>javax.servlet-api</artifactId>
+	<version>3.0.1</version>
+</dependency>
+```
+- junit(JavaUnit) 테스트 설정 후 기본 unit유닛(단위)테스트
+- 단위테스트(junit)를 하는 이유는 실행환경에서 테스트 하기 전에 미리 예행 연습을 하는 역할 입니다.
+- 주로 CRUD(입력,조회,수정,삭제) 4가지를 테스트 후에 jsp 프로그램작업이 들어갑니다.
+- 메이븐과 그레들은 모두 빌드 도구 입니다. => 결과는 target폴더에 war실행파일이 만들어 짐.
+- 수업은 egov3.10(스프링4.3.22) 하시고, 진행 후 스프링5.2.5버전으로 마이그레이션 다같이 함.
+- 스프링프로젝트의 외부모듈 셋팅파일이 2가지로 구분됩니다.
+- 메이븐 으로 빌드: pom.xml사용 (xml태그로 구성) - egov(이클립스) 기본개발환경
+- 그래들 으로 빌드: build.gradle사용 (스크리트로 구성) - 안드로이드 스튜디오 기본개발환경
+- [수업공지]: 앞으로는 수업종료 10분 전에 질문/답변 시간을 갖는것이 어떨까 합니다. 
+- 이유는 수업진행 중간에 질문/답변 하기엔 약간 부담스러운 내용이 있을 수 있기 때문에, ^^
+- 질문 내용이 무엇이 되었든, 종료 10분 전에 답변을 들으실 수 있는 시간을 갖도록 하겠습니다.
+
+#### 20201211(금) 작업
+- 첨부파일 설정: servlet-context.xml에 파일업로드경로, 업로드용량제한 설정.
+- 위에 더해서 외부 의존성추가: pom.xml 메이븐 설정파일 내용 추가. fileupload~.jar
+- RestAPI 댓글컨트롤러 1개 만듭니다.-네이버에서 RestAPI로그인서버를 1개 만드는 것과 같습니다.
+- 게시판 로직에서 핵심: CRUD기본, 검색기능, 페이징처리로직, 첨부파일기능
+- 게시판 로직확장 : 댓글기능(Rest-API대세).
+- Rest-API확장기능: 네이버아이디로그인(우리는 여기까지), SNS(페이스북,트위터,구글) 로그인 API
+- 스프링 빈(등록되어서 사용가능하게된 클래스) 이 등록되는 절차(아래)
+- 톰캣서버(WAS)가 실행될때, 로딩 실행되는 파일 순서(아래)
+- web.xml 최초 실행.
+- 1. root-context.xml 실행.
+- 2. servlet(server + let = 서버프로그램): servlet-context.xml 실행.
+- 위 서블렛콘텍스트 안에 있는 component-span 의 패키지에 존재하는 아래 @~클래스를 읽어 들여서 빈으로 등록합니다.(아래)
+- @Controller, @Servcie, @Repository, @RestController(Rest-API)
+- ------------------------------------------------------------------------------------
+- 자바에서 인스턴스 오브젝트를 만들때, ClassName className = new ClassName(); 오브젝트를 만들었음.
+- 스프링에서 오브젝트를 생성하지 않고, 오브젝트를 주입하다고 하고, 기술용어로 DI(Dependency Injection)의존성주입.
+- 의존성주입(DI,외부모듈)할때, @Inject=@Autowired 줄바꿈하고, ClassName className;
+- 위 DI방식으로 SecurityCode클래스를 주입받아서, unscript메서드를 사용하였습니다.
+- 쿼리스트링: 쿼리(질의)스트링(문자열) URL에서 쿼리스트링이라고 하면, URL?키1=값1&key2=value2
+- /admin/board/board_view?bno=${boardVO.bno}
+- BoardVO 클래스 만들기: Admin컨트롤러에서 Model클래스를 이용해서 jsp로 board_list 데이터셋를 보낼때 필요한 클래스 입니다.
+- AdminController 에서 board_list, board_view, board_write 바인드 매핑만들기
+- board_list.jsp, board_view.jsp, board_write.jsp 만들기
+
+#### 20201210(목) 작업
+- html게시판 소스를 jsp로 변환.
+- 리버스 엔지니어링: reverse 반대말 : 일반 erd만들고 -> 물리DB : 반대 물리DB -> erd를만든다
+- 개인 카톡 면담 12월 화두,(아래 2가지 중 최소 1가지 글을 남겨 주세요, 2개 다 도 가능합니다.^^)
+- 1). 11월9일 부터 시작 이후 1달 가까이 지났으니, 현재 수업 대해서 어떤 분야든 의견 있으신분 말씀해 주세요, 수업에 반영 하도록 하겠습니다.
+- 2). 사람인 취업사이트에서 학생 본인이 일 하고 싶은 회사 1개를 골라서 URL을 남겨 주세요. 
+- 첨부파일 등록에 사용되는 form 태그에는 특별한 속성이 추가 되어야만, 파일 전송이 가능합니다.
+- 그속성은: encType="multipart/form-data" 필수. 파일전송이 포함된 폼에서는 엔코딩타입속성에서 파일분할로 전송해라.
+- 모달(Modal): 이용자가 팝업대화상자 내용을 종료하기 전에는 다른 화면으로 이동하지 못하는 방식 팝업창. 
+- 모달리스(Modeless): : 이용자가 팝업대화상자 내용을 종료하기 전이라도, 현재 팝업창을 띄운상태에서 다른 창으로 이동가능. 
+- 댓글 관련 디자인 추가 후 Ajax 적용
+
+```
+<!-- 댓글 관련 자바스크립트 시작 -->
+<!-- 댓글 리스트 반복문용 JQuery라이브러리 == jstl의 향상된for문 같은 역할 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
+<!-- 댓글 템플릿(빵틀) 만들기(아래) -->
+<script id="template" type="text/x-handlebars-template">
+{{#each .}}
+	<div class="replyLi" data-rno={{rno}}>
+		<i class="fas fa-comments bg-blue"></i>
+		<div class="timeline-item">
+			<h3 class="timeline-header">{{replyer}}</h3>
+			<div class="timeline-body">{{replytext}}</div>
+			<div class="timeline-footer">
+				<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modifyModal">Modify</a>
+			</div>
+		</div>
+	</div>
+{{/each}}
+</script>
+<!-- 댓글 템플릿(빵틀) 출력(아래)  -->
+<script>
+var printReplyList = function(replyArr, target, templateObject){
+	var template = Handlebars.compile(templateObject.html());
+	var html = template(replyArr);
+	$(".replyLi").remove();
+	target.after(html);
+}
+</script>
+<script>
+$(document).ready(function(){
+	$("#insertApplyBtn").on("click",function(){
+		$.ajax({
+			type:'get',
+			url:'/resources/board_view.html',
+			dataType:'text',
+			success:function(result){
+				var replyList = [
+					{rno: 1, bno: 15, replytext: "test1", replyer: "test1", regdate: 1607504648000},
+					{rno: 2, bno: 15, replytext: "test2", replyer: "test2", regdate: 1607504648000}
+					];
+				printReplyList(replyList, $(".time-label"), $("#template"));
+			}
+		});
+	});
+});
+</script>
+<!-- 댓글 수정/삭제용 모달팝업창(아래) -->
+<div id="modifyModal" class="modal modal-primary fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="display:block;">
+	<button type="button" class="close" data-dismiss="modal">&times;</button>
+	<h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body" data-rno>
+       <input type="hidden" id="rno" class="form-control">
+	<p><input type="text" id="replytext" class="form-control"></p>
+      </div>
+      <div class="modal-footer">
+	<button type="button" class="btn btn-info" id="replyModBtn">Modify</button>
+	<button type="button" class="btn btn-danger" id="replyDelBtn">DELETE</button>
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+//댓글 리스트에서 댓글 수정버튼 클릭시 모달창 내용에 바인딩 시키는 코딩(아래)
+$(document).ready(function(){
+	//선택한 댓글(template:빵틀)의 데이터를 모달창의 id,클래스에 데이터 바인딩
+	$(".timeline").on("click", ".replyLi", function(event) {
+		var reply = $(this);
+		$("#rno").val(reply.attr("data-rno"));
+		$(".modal-title").html(reply.find(".timeline-header").text());
+		$("#replytext").val(reply.find(".timeline-body").text());
+	});
+});
+</script>
+<!-- 댓글 관련 자바스크립트 끝 -->
+```
+#### 20201209(수) 작업
+- Rest API방식으로 화면을 처리것이 트렌드 입니다.(빅데이터를 시각화하는 데 RestAPI+Ajax 기술사용)
+- Rest: Representation 기존데이터를 가지고, 화면 깜빡임 없이 데이터를 재가공하는 처리.
+- REST API사용되는 기술: 데이터 전송/수신 Ajax기술(프론트-개발자)로 처리. API(서버단기술)
+- Ajax: Asyncronized Javascript and Xml 비동기 통신으로 자바스크립트로 Json(text자료)를 재처리하는 기술. 
+- 스프링관리자 AdminLTE템플릿 폰트어썸아이콘: 아래 템플릿에서 icon메뉴에서 fontAswesome 항목 클릭
+- 오후에는 스프링 관리자단에서 [게시물 관리] 메뉴 webapp/resources/html만들고, -> jsp변환 작업이어서 합니다.
+- prefix(jstl), suffix(servlet-context.xml)
+- prefix ,suffix 그냥 경로의 앞부분 뒷부분 생략가능하게 만드는 역할
+- @RequestMapping...반환값에서 prefix(/WEB-INF/views/)가 사용, suffix(.jsp)
+-	...
+-		return "{prefix}admin/board/board_list{suffix}";
+-	...
+- 아래에서 사용된 prefix는 생략가능하다.
+- <beans:property name="prefix" value="/WEB-INF/views/" />
+- 아래에서 사용된 suffix는 생략가능하다.
+- <beans:property name="suffix" value=".jsp" />
+- 전체 틀(아래 읽으시면) : 자바이론 공부하신, 아래 데이터 흐름을 제어하는데 사용.
+- 여러명의 회원 정보(MemberVO-자료형클래스를이용부분)를
+- 전달주고받고(MainControler-메서드,URL호출부분), 
+- 출력(MemberService-비지니스로직부분)하는 메소드 선언하기
+- 미지의 부분 -----------------------------------------
+- 데이터베이스CRUD처리부분(MemberDAO-데이터베이스엑세스부분)
+- -------------------------------------------------
+- for (MemberVO member : members) {// members여러 레코드중 1개의 레코드를 member오브젝트객체로 대입
+- 1번째반복-> members[0]레코드데이터=>MemberVO member객체벼수 =>출력시 member.toString();
+- 2번째반복-> members[1]레코드데이터=>MemberVO member객체변수 =>출력시 member.toString();
+- 3번째반복-> members[2]레코드데이터=>MemberVO member객체변수 =>출력시 member.toString(); 
+- 개인 카톡 면담 12월 화두,(아래 2가지 중 최소 1가지 글을 남겨 주세요, 2개 다 도 가능합니다.^^)
+- 1). 11월9일 부터 시작 이후 1달 가까이 지났으니, 현재 수업 대해서 어떤 분야든 의견 있으신분 말씀해 주세요, 수업에 반영 하도록 하겠습니다.
+- 2). 사람인 취업사이트에서 학생 본인이 일 하고 싶은 회사 1개를 골라서 URL을 남겨 주세요.
+- 서버시간 가져오기 미션 MainController클래스 수행
+- pom.xml 외부라이브러리를 관리하는 메이븐설정파일을 이용해서 외부모듈 가져와 사용하기 목적.-스프링프로젝트에서 메이븐 기본작업 테스트용.
+- Step3(열거형-Enum형 자료형클래스 사용) 를 생성. 
+
+#### 20201208(화) 작업
+- Step2.java클래스 파일1개를 src/test/java폴더안에 kr.or.member패키지를 만들어서 3개 클래스파일로 분리.
+- 3개의 자바클래스 모여서 1개의프로그램이 됨. 진입점 main메서드 1개만필요
+- erd보고 MemberVO.java 클래스만드시는것  1.
+- 데이터베이스자료를 가공하는(비지니스로직) 서비스클래스 만들기 2.
+- 조건문: if, switch(조건)~case문
+- 반복문: for, forEach(제일많이 사용), while(많이안쓰는 이유, 무한루프로 빠지는 오류가 발생), forEach예,향상된for(member:member_list){구현내용}
+- 연산자: +-x/,=(대입연산자)예, int sum = 3+5;
+- 라이브러리(jar): 오브젝트클래스가 모여있는 패키지(묶음)을 라이브러리 라고 합니다. 
+- 람다식: 자바버전 8부터 지원하는 축소 코딩 방식 입니다. ->애로우화살표로 익명메서드(콜백함수)를 표시 호출시 자동실행을 구현.Lambda 클래스를 만들어서 실습.
+- 자바스크립트에서 콜백함수부분을 => 애로우화살표로 대체해서 축약해서 표시해서 호출시 자동실행을 구현.
+- 람다식은 특별한 로직없어서 논리적인 내용이 없고, 단순히 코드를 생략할때 ->애로우, ()익명함수 이 2개를 사용해서 코드사용을 축소하는데 의미 가 있습니다.
+- 우리나라 스프링에서는 일반적이진 않지만, 외국에서는 많이 사용. 외국소스를 갖다쓸때, 람다식을 볼 줄 알아야 무리없이 외국소스를 가져다 사용할 수 있게 됩니다.
+- 제네릭: Generic 일반적인 변수 타입. Map<String,Integer> mapTest = new HashMap<String,Integer>();
+- 제네릭을 사용하는 이유: 코딩작업시 매개변수의 타입을 제한을 두어서, 값을 입출력 할 때 에러 상황을 미리 확인 하기 위해서.
+- 코드 인스펙트: 코드 분석 -> 코드 생성
+- 회사 자체 솔루션(프레임워크) 기반으로 직원들이 코딩 작업을 하게 됩니다.
+- 선배와 같이 프로젝트 진행 3개월, 6개월 진행하시면, 회사 자체 프레임워크(솔루션)를 이해가 됩니다. 
+- 파일 입출력 처리 마무리 OK.
+- member_list.jsp에서 MemberVO 클래스 테스트 사용 예정(아래).
+- 데이터 타입에 대해서 배열타입과 리스트타입 그리고, 해시타입
+- 2차원 배열타입 변수 -> 클래스오브젝트 배열타입 변수으로 변경 -> 클래스오브젝트 List타입 변수로 변경
+
+```
+Date toDay = new Date();
+MemberVO m1 = new MemberVO();
+// setter 메서드를 이용해 해당 인스턴스 변수에 값을 넣는다.
+m1.setUser_id("kimilguk");
+m1.setUser_name("김일국");
+m1.setEmail("kimilguk@abc.com");
+m1.setEnabled(true);
+m1.setReg_date(toDay);
+m1.setLevels("ROLE_ADMIN");
+MemberVO[] members_array = new MemberVO[2];
+members_array[0] = m1;
+members_array[1] = m1;
+System.out.println("Array 배열 데이터 타입은 " + members_array.toString());
+//=====================================================================
+List<MemberVO> members_list = Arrays.asList(members_array);//실제 DB에서는 출력을 List 데이터타입 으로 반환받는다
+System.out.println("List 데이터 타입은 " + members_list.toString());
+//=====================================================================
+Map<String, Object> paramMap = new HashMap<String, Object>();
+paramMap.put("bno", 2);
+paramMap.put("fullname", "abc.jpg");
+System.out.println("해시맵 데이터 타입은 " + paramMap);
+System.out.println("해시맵 일부만 출력은 " + paramMap.get("bno"));
+```
+
+#### 20201207(월) 작업
+- 목표: 자바(스프링)벡엔드단부분에 이력서(포트폴리오)+면접에서 일할수 인력으로 평가받는게 목적.
+- 4년제 컴퓨터공학과 자바 1년(자바+jsp=2개학기)==2주(대학1학기)
+- 바이트스트림(문자가아닌데이터): InputStream(업로드), OutputStream(다운로드)클래스를 사용.
+- 게시판 첨부파일은 바이트스트림으로 데이터를 인풋, 아웃풋 합니다.
+- 파일로부터 입력/출력이 필요할때는 : FileInputStream(FileReader), FileOutputStream(FileWriter) 클래스 사용.
+- 이미지파일을 업로드할때, 다운로드할때 100M 초고화실 이미지 제한이 필요. 이미지 크기(해상도) 조정이 필요한 경우, 별도의 외부  처리 클래스가 필요. 우리는 이미지 해상도를 조절하진 않지만, 1회 업로드 용량은 2M정도로 제한을 두는 코딩이 들어갑니다. 
+- 캐릭터스트림(문자데이터) : Reader, Writer 클래스를 사용.
+- 파일 업로드 경로가 없으면, /tmp에 저장됩니다.이러면 업로드된 파일 관리가 않되기 때문에,
+- 위와 같은 문제로 경로 지정이 필요함., 헤로쿠에서 /tmp에 저장하겠으나, 실제로는 tmp에 저장하시면, 서버를 껐다가 켜면, tmp내용은 사라집니다. 실제 운영서버에서는 파일업로드경로를 제대로 지정해야 합니다.
+- File클래스와 입출력 스트림: 게시판에서는 파일 업로드/다운로드에 기술이 사용됩니다.
+- 마지막달에 배우는 안드로이드앱도 자바기반의 기술을 이용합니다.
+- 스레드 특징은: 비동기적으로 run이 실행된다. 그래서, 통신프로그램에서 많이 사용.(안드로이드앱)
+- 헤로쿠 클라우드에서는 HSql 데이터베이스(프로토타입용)를 사용합니다.
+- 헤로쿠에서도 Mysql(Maria)DB를 사용할 순 있으나, 신용카드번호가 필요해서 제껴 놓겠습니다.
+- 로컬PC에서는 HSql+Mysql -> 오라클용으로 마이그레이션해서 사용하는 방법을 배우시게 됩니다. 
+- java.lang패키지: Thread클래스는 통신프로그램에서 사용(안드로이드 앱)-
+- 통신에서 스레드를 사용하는 이유는 데이터를 요청하고, 응답을 받을때까지 기다려야 합니다. 1개의 스레드가 기다려야합니다.
+- 위 상태에서는 통신프로그램때문에, 웹프로그램이 멈춰야 합니다. 이 상황은 방지하려고, 비동기(멀티) 스레드를 사용합니다.
+- 데이터를 응답받는 스레드 중간에, 다른 스레드를 실행하는 역할이 필요합니다.
+- ---------------------------------------------------------------------------------
+- 예외처리하는 목적: 에러발생시 프로그램을 멈추지 않고, 계속 사용할 수 있도록 하는 목적으로 예외처리를 함. 
+- 예를 들면, 스마트폰앱에서 에러발생 시, 앱이 꺼져버리면, 계속 이어서 사용할 수 없음.
+- 그런데, 에러발생시 예외처리를 하게 되면, 앱이 꺼지는 것이 아니고, 그 화면만 사용못하고, 앱에서 다른 화면은 이용가능하게 됩니다.
+- 다형성: 오버로딩/오버라이딩을 설명/구현할때, 다형성을 사용합니다.
+- 동적바인딩: 동적(runtime시) 실행시 적용되는 값. 메서드의 매개변수(파라미터,인자)는 메서드를 호출할때, 값을 전송하게 됨(바인딩).
+
+#### 20201204(금) 작업
+- 오늘은 자바 인터페이스까지 연습했습니다.
+- 클래스는 개별 객체의 상태 정보를 저장하는 필드와 개별 객체의 행동 양식을 규정하는 메소드를 포함할 수 있다.
+- 회원멤버클래스를 만들기 실습: 회원 상태정보를 저장하는 필드(멤버변수:user_id, user_name, email,...)생성.VO(Value Object)클래스
+- 회원멤버클래스를 만들기 실습: 회원 맴버변수의 행동양식을 규정한는 메소드(함수)를 생성.
+- abstract(추상)클래스/메서드 예: abstract class calc { add(){}; minus(){}; multi(){}, sub(){}; }
+- 객체지향프로그래밍(OOP)-Object Oriented Programming 인스턴스(실행가능한클래스)를 사용하는 프로그램.
+- new 키워드로 만드는 오브젝트를 사용하는 방식이 필수.(한 물 간 방식)
+- 참조형변수: 객체가 위치해 있는 주소 값을 저장한다. = 실행가능한 변수 = 인스턴스변수 = 메모리에 로딩된 변수
+- 참조형변수예1: String s3 = new String(); //인스턴스 변수=오브젝트 를 이런방식 만들어서 사용함.
+- new String("초기값인자");//new String()괄호 안에 매개변수가 없는 생성자를 기본생성자.
+- 클래스 만들때 생성자메서드를 개발자가 만들필요가 없음. 왜냐하면, 자바에서는 컴파일할때 자동 만들어 주기 때문에, 필수지만, 만들 필요가 없음.
+- new String()처럼 클래스이름과 똑같은 메서드를 생성자 매서드라고 한다.
+- String 클래스 -> new 키워드로 만들어진 s3는 오브젝트(인스턴스변수)-실행가능한클래스변수
+- 참조형변수예2: s3 = "일반변수값입니다.";
+- 기본형변수예: String s3 = "일반변수값입니다.";//일반변수는 이 방식을 사용 단, 클래스형 변수는 new 키워드로 생성한 인스턴스 변수를 주로 사용합니다. 단, 스프링에서는 new키워드로 만드는 인스턴스 클래스변수보다는 사용방법 더 간단한 @인젝트(주입)방식의 변수를 사용.(스프링에서는 DI-Dependency Inject 용어를 사용) 
+- 자바프로그램중 반복문: 향상된 for문을 시작합니다.
+- 다국어지원하는 문자셋을 만들때: 유니코드로 제작. \u0041 => 이클립스에서 유니코드에디터에서는 A 로 수정합니다. 
+
+#### 20201203(목) 작업
+- 반복문 중에서 개선된 for문을 공부합니다.
+- 변수의 종류 아래 2가지.
+- 지역변수: 메서드 내에서 만든 변수로서, 메서드 안에서만 유효함.
+- 멤버변수(클래스변수=static): 클래스 전역에서 사용가능한 변수. VO(Value Object)클래스에서 주로 사용.
+- ----------------------------------------------------------------------
+- static(스태틱)변수/메서드: 정적변수/메서드. 클래스에서 유일한 변수/메서드 라는 말.
+- 인스턴스 클래스=오브젝트=실행가능한 클래스
+- 파라미터=매개변수, 매서드명(파라미터위치);
+- javac HelloWorldApp.java -encoding UTF-8 (자바컴파일방법: 소스에 한글 옵션)
+- javac자바컴파일러로 위에서 만든 HelloWorldApp.class파일은 실행가능한 파일 입니다.
+- 클래스파일 실행은 java kr.or.test.HelloWorldApp 단, 실행할 위치는 src/test/java
+- ---------------------------------------------------------------------
+- 분산처리(마이크로서비스): 댓글달기-Ajax = RestAPI(개발의핫트렌드)-대표예(네이버아이디 로그인 구현)
+- 일반웹프로그램은 동기처리: 화면이 기능이 실행중 이면, 종료될때 까지 멈춰있다.
+- 분산웹프로그램은 비동기처리: 기능이 실행중이어도 다른 웹프로그램을 실행가능, 화면이 멈춰있지 않게 됨.
+- 오픈소스-자바스크립트(웹브라우저용 js스크립트언어, 프론트쪽) - 크롬 브라우저만 있으면 실행됨. 
+- 자바스크립트는 *.js 파일자체를 실행합니다. 대신 자바  *.java실행되지않고, javac라는 자바컴파일러를 통해서 만들어진 *.class 파일이 실행됩니다.
+- 오라클-자바(웹서용 jsp컴파일언어, 백엔드쪽) - 크롬브라우저 + 톰캣 서버가 있어야만 실행됨.
+- 앞으로 스프링프로젝트 주 작업은 헤로쿠 클라우드로 배포합니다.(왜냐하면, 파스타정책이 체험신청 2주간으로 되어있어서)
+- 수료하실때쯤 면접일정에 맞춰서, 여러분 프로젝트를 파스타에 배포 하시는 것을 추천 드립니다.
+- 스프링관리자단 화면구현에서 왼쪽메뉴 active시키는 것 마무리. OK.
+- jsp 화면에서 데이터 전송하기(member_list.jsp) -> 
+- admin컨트롤러로 데이터 수신받고, jsp로 전송하기 -> jsp화면에서 데이터 수신받기.
+- 헤로쿠에 배포처리 OK.
+- 12월3일(목) 2교시 화면구현 시험(포트폴리오제출) OK.
+- 3교시 위 내용 마무리 후 자바 이론시작.(앞으로 2주간)
+- 이것이 자바다 4번째 과목 교재수령 방법 한번 더 공지(수,목 오후 6시~8시까지 학원방문수령)
+- 1. 구글 프레젠테이션 문서로 이론.
+- 2. 이론이 지겨우실때, AdminLTE 관리자단, board_list.jsp,board_view.jsp,board_write.jsp
+- 3. 실습은 github IT강의저장소의 V4.0.0 이것으로 실습(egov로)
+- 취업 프로세스1: 1. 이력서+포트폴리오 관문 2. 면접 => 취업
+- 취업 프로세스2: 1. 이력서+포트폴리오 관문 2. 코딩테스트(자바, j쿼리) 3. 면접 => 취업
+- ------------------------------------------------------------- 
+- 화면설계시험(화면구현 미응시자는 가능하시면) 과제물제출 미응시 하신분만 확인해주세요(아래),
 - 오늘 5시40분 이후 줌에서 오늘날짜 시험지 받으셔서,그림판에서 이름 작성 후 
 - 평가지그림판 및 과제물을 강사 이메일(boramcom@daum.net)로 제출해주시기 바랍니다.(제출 시간은 오후 5시 40분 이후 입니다.)
 
+#### 20201202(수) 작업
+- 게시물관리는 지금 하지 않고, 빈 화면 1개 만들어서 바인딩처리 후 헤로쿠 배포 합니다.
+- 헤로쿠에 배포전에 왼쪽메뉴에서 선택된 메뉴가 무언지, active시키는 j쿼리 적용하고나서...
+- admin컨트롤러 클래스에서 URL경로와 실제jsp파일과 바인딩 처리 OK.
+- jsp파일에서 폼 action속성값이동==buttton타입submit값, 링크경로를 html경로에서 컨트롤러의 바인딩경로로 변경.
+- admin폴더에는 크게 2가지기능: 관리자관리(member폴더에), 게시물관리(board폴더에)
+- 상대경로: ./(현재폴더위치), ../(상위폴더위치), 파일위치를 지정할때 사용.return(스프링 반환값)
+- 절대경로: URL경로(웹브라우저로 접근가능한경로)를 사용할때. @RequestMapping에서(스프링)
+- 게시판 html화면 구현하기 전, 관리자관리 부분 제어용 컨트롤러 클래스 만들고 있습니다.
+- admin/include/header.jsp의 메뉴링크를 html상대경로에서 Admin컨트롤러의 절대경로로 변경처리.(아래)
+- /admin/member_list(관리자관리 메뉴와바인딩), /admin/board_list(게시물관리 메뉴와 바인딩)
+- 데이터를 전송/수신하는 관계는 나중에 진행됩니다. 오늘은 URL과 jsp만 바인딩만 시킵니다. 
+- 저장소이름: 변수(내용에 변하는 값을 java로 불러옴)  / 상수(내용에 정해진 값을 불러옴)
+- member_view.html 마무리.
+- member_write.html 화면작업: 부트스트랩참조URL(아래)
+- http://localhost:8080/resources/pages/forms/general.html
+
+#### 20201201(화) 작업
+- html lang="en" 이부분은 여러분PC가 영문 윈도면 정상.
+- 그런데, 우리PC는 한글윈도우 이기 때문에, html lang="ko"로 변경하시면 편리합니다.
+- 외부라이브러리 불러오는 상대경로를 절대경로로 변경.
+- AdminLTE로 만드는 스프링 관리자 메인 html화면구현 마무리.
+- 관리자관리: member_list.html, member_view.html, member_write.html
+- 게시물관리: board_list.html, board_view.html, board_write.html
+- 관리자단 html화면구현한 내용을 jsp 만들어서 컨트롤러자바클래스에서 링크만 걸어 줍니다.
+
+#### 20201130(월) 작업
+- AdminLTE로 만드는 스프링 관리자 메인화면 구현 샘플(아래)
+![ex_screenshot](./git_img/admin_home.jpg)
+- AdminLTE다운받은 압축파일을 풀어서, 폴더(dist,pages,plugins), index(1,2).html
+- 위 6개를 resoureces폴더에 붙여 넣습니다.
+- 프로트엔드단 대세중 2가지 플러그인(자바스크립트템플릿) 위에 포함되어 있습니다.
+- 첫째, 부트스트랩.
+- 둘째, chartJS(빅데이터 시각화할때 사용 JS템플릿)
+- 위 기술만 가지고는 수입이 부족하기 때문에, 스프링을 배웁니다.
+- plugins중 ;문장끝 바로 앞에 , 존재하면 에러표시가 나옵니다.
+- 고전자바스크립트(네이티브 자바스크립트)에서는 위 문제가 에러표가 되지만, 아래 es6부터는 정상으로 표시가 됨. es6,es5(엑마스크립트 버전을 말합니다.)
+- 자바스크립트 버전, es5(2015년 js버전)이전버전-위 문제 에러, es6(2016년 js버전)-위 문제 정상.
+- dist: distribute(배포)하는 폴더명, 이 폴더만 있으면 실행이 가능합니다.
+- 그래픽이미지 2가지: 비트맵 이미지(jpg, gif, png 이런이미지는 화면을 확대하면 깨짐, 이미지1개면 끝), 벡터 이미지(화면을 확대해도 깨지지 않음, 스크립트코드로 만들어진 이미지).
+
+```
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="210" height="210">
+  <rect x="5" y="5" width="200" height="200" style="fill:red; stroke:black; stroke-width:10px"></rect>
+</svg>
+```
+- SVG이미지는 개발자 입장에선, 안드로이드 스튜디오에서 버튼또는 이미지만들때 사용. xml로 만듭니다.
+- AdminLTE를 사용하면, 좋은 이유(아래)
+- font어썸제공. 사용예, <i class="fa fa-cc-visa" style="color:red;"></i>
+- IFrame(아이프레임): 이 태그를 사용하면, 예전 프로그래머라고 생각하시면, 않됩니다.
+- 구글맵(지도),유투브 퍼가기에서 사용하고 있습니다.
+- 아이프레임은 화면레이아웃과는 상관없이, 콘텐츠가 들어갈 영역을 잡는 역할을 하는 태그 입니다.
+- URL 외부 콘텐츠를 가져다가 우리 홈페이지에 끼워넣을때 사용합니다.
+- SCSS는 CSS 파일을 컴파일한 파일을 SCSS라고 합니다.
+- .jsp 또는 .java를 컴파일하면 .class실행파일이 만들어지는 것과 같은 원리. 
+- 스프링에서는 관리자단, 사용자단이 나눠져서 개발됩니다.(보안때문에생긴 트렌드 입니다.)
+- 관리자단은 거의 외부 디자인템플릿을 사용합니다.(예, AdminLTE)
+- 사용자단은 거의 개성있는 내부 디자인을 사용합니다.(예, 퍼블리셔가 부트스트랩기반으로 작업합니다. 현재 트렌드 입니다.)
+- AdminLTE(부트스트랩기반 디자인템플릿)로 관리자단 화면을 구현.
+- 위 템플릿을 사용한다는 것은, 템플릿의 html-css-js를 갖다가 사용하는 방법을 익히시는 겁니다.
+- 위에서 화면구현 한 스태틱 html소스를(퍼블리셔가 만든소스), V6.0.0시간에 jsp로 변경하셔서, 프로그램을 입히시게 됩니다.(개발자 하는일) 
+- 헤로쿠 Deploy메뉴에서 작업을 했는데, 적용이 않되시고, 예전내용이 보이시는 경우,
+- 헤로쿠에서 Deploy하실때, 깃허브에서 자료를 가져오게 되는데요, 약간 시간차가 있을 수 있습니다.
+- 또는, 커밋/푸시가 잘 되었는지 확인해 주신 후,다시 Deploy해주시기 바랍니다.
+- 구글 문서 작성방법(아래)
+
+```
+jsp파일과, css소스 복사해서 붙여 넣으시고, 이미지 캡쳐는 지금 화면에 보이는데로 크롬 개발자도구에서 Toggle Device Toolbar를 클릭한 후 Responsice에서 
+731(모바일), 1131(태블릿), 1132(PC) 각각 1개이상씩 캡쳐해서 구글 문서에 붙여 넣으시면 좋겠습니다.
+
+```
+- 나눔고딕폰트 불러오기 할때, mobile.css만 해주셔도, 다른 기기에서 모두 적용 됩니다.
+- 위 이유는, html, css, js는 소스라인 위쪽에서 아래로 적용이 됩니다.
+- 그래서, 모바일.css 제일 상단에 있기 때문에, mobile.css에서 적용하면, 아래쪽(tablet, pc)에 모두 적용 됩니다. 
+- 참고, 이클립스에서 소스 검색후 한꺼번에 바꾸는 기능위치는 Edit메뉴->Find/Replace 클릭.
+- 지난주 태블릿이상메뉴에서 메인과 서브페이지 상단 메뉴 크기변동 문제 처리예정.(아래)
+
+```
+<!-- mobile.css -->
+body {
+line-height:1.4 !important;/*!important 추가*/
+font-family:'Malgun Gothic', dotum, sans-serif !important; /*글꼴고정추가*/
+}
+```
+- 12월3일(목)2교시 과제물 서식 배포 예정.(과제물 서식 설명하면서 지난주 jsp 작업 리뷰 및 헤로쿠 클라우드 URL확인) https://drive.google.com/file/d/1Y9Mrukyr-6tmn9RFfkQzbTMR2l0B8jsJ/view?usp=sharing
+- 지금까지 한것 깃에 푸시 하고, 헤로쿠 클라우드에서 Deploy(배포)합니다.
+- 화면구현 과제물 작성시간 드립니다.(2교시+3교시)
+- 4교시 부터 AdminLTE 부트스트랩 기반의 디자인 템프릿을 사용해서 관리자 화면구현 실습 진행 합니다.
+
+#### 20201127(금) 작업
+- 스프링부트 버전2.0 (조그만동생): 소규모 프로젝트(스타트업)-조달청에 올라가는 프로젝트X
+- 스프링부트 자동으로 생성되는 코드많아서, 사용하기 편하지만(장점), 커스터마이징 한계가 있습니다.(단점)
+- 스프링프레임워크 버전4.3.22 (큰형): 중대형 프로젝트 - 조달청에 올라가는 프로젝트O
+- 스프링프레임워크는 커스터마이징하는 프로젝트에 유용합니다.(장점), 복잡하다는 것이 단점.
+- /resources/sample/반응형페이지 : 실제서비스되는 내용은 아닙니다. 퍼블리셔가 만들어서 준것을 개발자가 여기다 배치 하는 공간 입니다.
+- 위와 같은 콘텐츠를 Static콘텐츠라고 합니다.(스태틱은 고정적인 내용-html, css, js, img)
+- Static콘텐츠(많이사용)반대<->동적콘텐츠(jsp 프로그램으로 콘텐츠 내용이 수시로 변경되는 영역)
+- 대표적인 Dynamic콘텐츠영역 : 게시판 입니다.(게시물을 등록하면, 콘텐츠가 동적 늘어납니다.)
+- 실제 개발은 위에서 만든 퍼블리셔 결과물을 이용해서 WEB-INF/views 폴더에 개발한 결과를 배치하게 됩니다.
+- 헤로쿠 클라우드에서 서비스 되는 페이지가 WEB-INF/views 폴더에 위치하게 됩니다.
+- WEB-INF/views/sample폴더 생성 후 index.jsp
+- 컨트롤러 자바클래스에서 외부에서 /접근시 index.jsp로 매핑시킨 후 확인.
+- 퍼블리셔가 만든 index.html 복사해서 index.jsp 붙여넣기 후 확인.
+- jsp분리작업: include폴더 생성후 그안에 header.jsp, footer.jsp 2개만듭니다.
+- index.jsp 에서 header.jsp에 들어갈 영역 Cut해서 붙여넣기.
+- index.jsp 에서 footer.jsp에 들어갈 영역 Cut해서 붙여넣기. 후 확인.
+- -------------------------------------------------------------
+- 반응형 웹페이지 작업 결과를 스프링MVC프로젝트에서 home.jsp로 변환.
+- http://localhost:8080/ 새로만든 home.jsp가 나오도록 하겠습니다.
+- 위 home.jsp 결과물 헤로쿠 클라우드에 올릴 예정.
+- 최종결과: https://kimilguk.herokuapp.com (반응형 홈페이지 나오게 됩니다.)
+- 파스타 클라우드 초기화 따른 파스타 재신청 처리예정.
+
 #### 20201126(목) 작업
-- 
+- 반응형 웹페이지 작업 마무리. 
 
 #### 20201125(수) 작업
 - 테이블 태그:(아래) 
