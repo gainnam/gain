@@ -12,84 +12,85 @@ import org.edu.service.IF_MemberService;
 import org.edu.util.SecurityCode;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
+import org.edu.vo.PageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 //스프링에서 사용가능한 클래스를 빈(커피Bean)이라고 하고, @Contorller 클래스를 사용하면 됨.
 @Controller
 public class AdminController {
-	//@Inject 의존성 주입방식DI(Dependency Inject)으로 외부 라이브러리 모듈 믈래스 인스턴스 갖다쓰기(아래)
+	//@Inject == @Autowired 의존성 주입방식 DI(Dependency Inject)으로 
+	//외부 라이브러리 = 컴포넌트 = 모듈  = 실행클래스 = 인스턴스 갖다쓰기(아래)
 	@Inject
 	SecurityCode securityCode;
 	
 	@Inject
-	IF_MemberService memberService;//멤버인터페이스를 주입받아서, memberService라는 오브젝트 변수를 받음
+	IF_MemberService memberService;//멤버인터페이스를 주입받아서 memberService오브젝트 변수를 생성.
 	
-	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.GET)
+	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.GET)//URL경로
 	public String board_write() throws Exception {
-		return "admin/board/board_write";
+		return "admin/board/board_write";//파일경로
 	}
-	@RequestMapping(value="/admin/board/board_write", method=RequestMethod.POST)
+	@RequestMapping(value="/admin/board/board_write",method=RequestMethod.POST)
 	public String board_write(MultipartFile file, BoardVO boardVO) throws Exception {
-		//post로 받은 boardVO내용을 DB서비스에 입력하면 됨.
-		//DB에 입력 후 새로고침명령으로 게시물테러를 당하지 않으려면, redirect로 이동처리 합니다.(아래)
+		//post받은 boardVO내용을 DB서비스에 입력하면 됩니다.
+		//dB에 입력후 새로고침명령으로 게시물 테러를 당하지 않으려면, redirect로 이동처리 합니다.(아래)
 		return "redirect:/admin/board/board_list";
 	}
-	
-	@RequestMapping(value="/admin/board/board_view",method=RequestMethod.GET)
+	@RequestMapping(value="/admin/board/board_view", method=RequestMethod.GET)
 	public String board_view(@RequestParam("bno") Integer bno, Model model) throws Exception {
-		//jsp로 보낼 더미테이터 memberVO에 담아서 보냄.
-		//실제로는 아래처럼 더미데이터를 만드는 것이 아닌
+		//jsp로 보낼 더미 데이터 boardVO에 담아서 보낸다.
+		//실제로는 아래처럼 더미데이터를 만드것이 아닌
 		//쿼리스트링(질의문자열)로 받아온 bno(게시물 고유번호)를 이용해서 DB에서
-		//select * from tbl_board where bno = ? 마이바티스 실행이 된 결과값이 List<BoardVO>형으로 받아서 jsp보내줌.
-		
+		//select * from tbl_boarad where bno = ? 마이바티스 실행이 된 결과값이 BoardVO형으로 받아서 jsp보내줌.
+		//'3', '새로운 글을 넣습니다. ', '새로운 글을 넣습니다. ', 'user00', '2019-10-10 12:25:36', '2019-10-10 12:25:36', '0', '0'
 		BoardVO boardVO = new BoardVO();
 		boardVO.setBno(1);
-		boardVO.setTitle("첫 번째 게시물 입니다.");
-		String xss_data = "첫 번째 내용입니다.<br>줄바꿈을 했습니다. <script>alert('메롱');</script>";		boardVO.setContent("첫 번째 내용입니다.<br>줄바꿈 처리입니다.");
+		boardVO.setTitle("첫번째 게시물 입니다.");
+		String xss_data = "첫번째 내용 입니다.<br><br><br>줄바꿈 처리입니다. <script>location.href('http://naver.com');</script>";
 		boardVO.setContent(securityCode.unscript(xss_data));
+		boardVO.setWriter("admin");
 		Date regdate = new Date();
 		boardVO.setRegdate(regdate);
 		boardVO.setView_count(2);
 		boardVO.setReply_count(0);
 		model.addAttribute("boardVO", boardVO);
 		return "admin/board/board_view";
-		
 	}
 	@RequestMapping(value="/admin/board/board_list",method=RequestMethod.GET)
 	public String board_list(Model model) throws Exception {
 		//테스트용 더미 게시판 데이터 만들기(아래)
 		BoardVO input_board = new BoardVO();
 		input_board.setBno(1);
-		input_board.setTitle("첫 번째 게시물 입니다.");
-		String xss_data = "첫 번째 내용입니다.<br>줄바꿈을 했습니다. <script>alert('메롱');</script>";
-		input_board.setContent(securityCode.unscript(xss_data));
+		input_board.setTitle("첫번째 게시물 입니다.");
+		input_board.setContent("첫번째 내용 입니다.<br>줄바꿈했습니다.");
 		input_board.setWriter("admin");
 		Date regdate = new Date();
 		input_board.setRegdate(regdate);
 		input_board.setView_count(2);
 		input_board.setReply_count(0);
 		BoardVO[] board_array = new BoardVO[2];
-		//input_board = {1, "첫 번째 게시물 입니다.", "첫 번째 내용입니다.<br>줄바꿈을 했습니다.", "admin", "now()", 2, 0};
+		//input_board = {1,"첫번째 게시물 입니다.","첫번째 내용 입니다.<br>줄바꿈했습니다.","admin",now(),2,0};
 		board_array[0] = input_board;
-		//-----------------------------------------------
+		//------------------------------------
 		BoardVO input_board2 = new BoardVO();
 		input_board2.setBno(2);
-		input_board2.setTitle("두 번째 게시물 입니다.");
-		input_board2.setContent("두 번째 내용입니다.<br>줄바꿈을 했습니다.");
+		input_board2.setTitle("두번째 게시물 입니다.");
+		input_board2.setContent("두번째 내용 입니다.<br>줄바꿈했습니다.");
 		input_board2.setWriter("user02");
 		input_board2.setRegdate(regdate);
 		input_board2.setView_count(2);
 		input_board2.setReply_count(0);
-		//게시물번호만 2로 변경해서 나머지 값들은 변경없이 아래 1번 레코드에 저장.
-		//input_board = {2, "첫 번째 게시물 입니다.", "첫 번째 내용입니다.<br>줄바꿈을 했습니다.", "admin", "now()", 2, 0};
+		//input_board2 = {2,"두번째 게시물 입니다.","두번째 내용 입니다.<br>줄바꿈했습니다.","user02",now(),2,0};
 		board_array[1] = input_board2;
-		//------------------------------------------------
-		List<BoardVO> board_list = Arrays.asList(board_array);
+		//-------------------------------------
+		List<BoardVO> board_list = Arrays.asList(board_array);//배열타입을 List타입으로 변경절차.
 		model.addAttribute("board_list", board_list);
 		return "admin/board/board_list";
 	}
@@ -106,23 +107,32 @@ public class AdminController {
 	public String member_write() throws Exception {
 		return "admin/member/member_write";
 	}
-	
+	@RequestMapping(value="/admin/member/member_delete", method=RequestMethod.POST)
+	public String member_delete(RedirectAttributes rdat, @RequestParam("user_id") String user_id) throws Exception {
+		memberService.deleteMember(user_id);
+		//Redirect로 페이지 이동 시 전송값을 숨겨서 보내는 역할 클래스 RedirectAttributes임.
+		rdat.addFlashAttribute("msg", "삭제");
+		return "redirect:/admin/member/member_list";//seccess=ok는 보안에 약해서 안함
+	}
 	//member_list.jsp에서 보낸 데이터를 수신하는 역할 @RequestParam("키이름") 리퀘스트파라미터 클래스 사용.
 	//현재컨트롤러 클래스에서 member_view.jsp로 데이터를 보내는 역할 Model 클래스 사용.
 	//member_list.jsp -> @RequestParam("user_id")수신, Model송신 -> member_view.jsp
 	@RequestMapping(value="/admin/member/member_view",method=RequestMethod.GET)
-	public String member_view(@RequestParam("user_id") String user_id, Model model) throws Exception {
+	public String member_view(@ModelAttribute("pageVO") PageVO pageVO, @RequestParam("user_id") String user_id, Model model) throws Exception {
 		//내가 멤버 리스트가 보고 싶어서 리스트 클릭한거 자체가 "1명멤버내용 주세요"하고 요청을 한거고 
 		//그 요청을 컨트롤러에서 받은건가요?
 		//위에서 수신한 user_id를 개발자가 만든 user_id2이름으로 member_view.jsp 보냅니다.(아래)
 		//member_view.jsp에서 model로 수신한 데이터 user_id2 를 출력하는 방법은 점심 이후에...
-
-		model.addAttribute("user_id2", user_id + "<script>alert('메롱');</script> 님");
+		MemberVO memberVO = memberService.readMember(user_id);
+		model.addAttribute("memberVO", memberVO);
+		//model.addAttribute("user_id2", user_id + "<script>alert('메롱');</script> 님");
 		return "admin/member/member_view";
 	}
 	
 	@RequestMapping(value="/admin/member/member_list",method=RequestMethod.GET)
-	public String member_list(@RequestParam(value="search_type",required=false) String search_type, @RequestParam (value="search_keyword", required=false) String search_keyword, Model model) throws Exception {
+	public String member_list(@ModelAttribute("pageVO") PageVO pageVO, Model model) throws Exception {
+		//고전적인 방식의 검색코드(아래)
+		//@RequestParam(value="search_type",required=false) String search_type, @RequestParam(value="search_keyword",required=false) String search_keyword
 		/*
 		 * String[][] members = {
 		 * {"admin","찐관리자","admin@abc.com","true","2020-12-04","ROLE_ADMIN"},
@@ -156,8 +166,25 @@ public class AdminController {
 		 * Arrays.asList메서드로 List타입으로 변경해서 jsp 보냅니다. //위에서 테이터타입연습으로 총 3가지 테이터 타입을 확인했음.
 		 * System.out.println("List타입의 오브젝트 클래스내용을 출력 " + members_list.toString());
 		 */
-		List<MemberVO> members_list = memberService.selectMember(search_type, search_keyword);
+		
+		// selectMember마이바티스쿼리를 실행하기전에 set이 발생해야 변수값이 할당됩니다.(아래)
+		if(pageVO.getPage() == null) {//int 일때 null체크에러가 나와서 pageVO의 page변수형 Integer로벼경.
+			pageVO.setPage(1);
+		}
+		pageVO.setPerPageNum(8);//리스트하단에 보이는 페이징번호의 개수
+		pageVO.setqueryPerPageNum(10);//쿼리에서 1페이지당 보여줄 회원수 10명으로 입력 놓았습니다.
+		//검색된 전체 회원 명수 구하기 서비스 호출
+		int countMember = 0;
+		countMember = memberService.countMember(pageVO);
+		pageVO.setTotalCount(countMember);//115전체 회원의 수를 구한 변수 값 매개변수로 입력하는 순간 calcPage()메서드실행.
+		
+		List<MemberVO> members_list = memberService.selectMember(pageVO);
 		model.addAttribute("members", members_list);//members-2차원배열을 members_array클래스오브젝트로 변경
+		//상단의 @ModelAttribute("pageVO")는 jsp로 PageVO클래스 결과를 보내주는 역할.
+		//만약에 위 @ModelAttribute를 사용한다면, 아래 model.~("pageVO",~)없어도 됨.
+		//*** model.addAttribute("pageVO", pageVO);
+		//System.out.println("디버그 스타트페이지는 : " + pageVO.getStartPage());
+		//System.out.println("디버그 엔드페이지는 : " + pageVO.getEndPage());
 		return "admin/member/member_list";//member_list.jsp 로 members변수명으로 데이터를 전송
 	}
 	

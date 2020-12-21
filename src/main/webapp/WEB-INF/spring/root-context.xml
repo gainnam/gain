@@ -4,10 +4,9 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd">
-
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	
 	<!-- 로컬 mysql log4jdbc 설정전 -->
 	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -15,8 +14,8 @@
 		<property name="username" value="root"></property>
 		<property name="password" value="apmsetup"></property>
 	</bean> -->
-		
-	<!-- 로컬 mysql log4jdbc 설정 후 -->	
+	
+	<!-- 로컬 mysql log4jdbc 설정후 -->
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" 
 				  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
@@ -25,14 +24,14 @@
 		<property name="username" value="root"></property>
 		<property name="password" value="apmsetup"></property>
 	</bean>
-		
+	
 	<!--
 		DataSource 설정으로 JDBC 연결후, MyBatis와 MySql을 연동시킴. 
-		SqlSessionFactory : myBatis와 스프링의 Connection 생성 후 쿼리 위치 지정.
+		SqlSessionFactory : myBatis와 스프링의 Connection 생성후 쿼리 위치지정.
 	 -->		 		
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">	   
 	 	<property name="dataSource" ref="dataSource" />
-	 	<!-- 매퍼 xml로만든 쿼리파일의 경로를 인식하게 함.(아래 classpath결로 src//main/resource/쿼리xml) -->
+	 	<!-- 매퍼 xml로만든 쿼리파일의 경로를 인식하게 함.(아래 classpath경로 src/main/resources/쿼리xml) -->
 	 	 <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
 	</bean>
 	
@@ -49,4 +48,5 @@
 	<context:component-scan base-package="org.edu.dao" />
 	<context:component-scan base-package="org.edu.service" />
 	<context:component-scan base-package="org.edu.vo" />
+	
 </beans>

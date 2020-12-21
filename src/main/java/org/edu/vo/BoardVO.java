@@ -4,24 +4,25 @@ import java.util.Date;
 
 /**
  * 게시판에서 사용되는 데이터 입출력 클래스
- * @author gainnam
+ * @author 김일국
  *
  */
 public class BoardVO {
 	//멤버변수 선언
-	private Integer bno;//int는 입력값 null불가능해서 null값 가능한 Integer로 변경.둘 다 정수형.
+	private Integer bno;//int은 입력값이 null일때 에러나기  때문에, Interger로 변경
 	private String title;
 	private String content;
-	private String writer; 
+	private String writer;
 	private Date regdate;
-	private Integer view_count;//대문자로 시작=클래스형 변수 ctrl클릭하면 이동가능
+	private Date update_date;
+	private Integer view_count;
 	private Integer reply_count;
-	
 	
 	@Override
 	public String toString() {
 		return "디버그용 BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ regdate + ", view_count=" + view_count + ", reply_count=" + reply_count + "]";
+				+ regdate + ", update_date=" + update_date + ", view_count=" + view_count + ", reply_count="
+				+ reply_count + "]";
 	}
 	public Integer getBno() {
 		return bno;
@@ -53,6 +54,12 @@ public class BoardVO {
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
 	}
+	public Date getUpdate_date() {
+		return update_date;
+	}
+	public void setUpdate_date(Date update_date) {
+		this.update_date = update_date;
+	}
 	public Integer getView_count() {
 		return view_count;
 	}
@@ -65,6 +72,5 @@ public class BoardVO {
 	public void setReply_count(Integer reply_count) {
 		this.reply_count = reply_count;
 	}
-	
 	
 }

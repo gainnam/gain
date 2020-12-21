@@ -5,6 +5,11 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+if('${msg}' !='') {//자바의 EL표기법 달라{변수명}
+	alert("${msg}를(을) 성공하였습니다.");
+}
+</script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>관리자 | Dashboard</title>
@@ -115,7 +120,7 @@
                   <p>관리자 관리</p>
                 </a>
               </li>
-              <li class="nav-item ">
+              <li class="nav-item">
                 <a href="/admin/board/board_list" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>게시물 관리</p>

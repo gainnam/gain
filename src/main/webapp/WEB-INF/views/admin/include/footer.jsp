@@ -52,31 +52,34 @@
 <script src="/resources/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="/resources/dist/js/pages/dashboard.js"></script>
-<!-- 왼쪽메뉴 선택된 부분 active클래스 주는 j쿼리 명령어 추가(아래_) -->
-<script>$(document).ready(function(){
-	//현재 선택된URL 값을 가져오는 명령(아래)
-	var current = location.pathname;
-	var current_2 = current.split("/")[2];//split함수로 current에 있는 문자를 분리
-	//alert(current_2);//debugging
-	//alert(current);//admin(관리자홈),admin/member_list(관리자관리),
+<!-- 왼쪽메뉴 선택된 부분 active클래스 주는 j쿼리 명령어 추가(아래) -->
+<script>
+$(document).ready(function() {
+	//현재 선택된 URL 값을 가져오는 명령(아래)
+	var current = location.pathname;//current변수저장소에서 board, member 클릭한 내용 확인
+	var current_2 = current.split("/")[2];//split분리함수로 current에있는 문자를 분리한 배열값을 반환.
+	//alert(current_2);//디버그용으로 출력.
+	//alert(current);// admin/(대시보드-undefined),admin/member_list(관리자관리),
 	//admin/board_list(게시물관리)
-	//active클래스명을 동적으로 추가할 영역은 nav-item 안쪽의 a태그의 class명을 추가하면 됨.
-	$(".nav-treeview li a").each(function(){
-		
-		if( $(this).attr('href').indexOf(current_2) != -1 ) {//위 문제를 처리하는 대체 함수 indexOf함수
-			$ (this).addClass("active");//선택한 메뉴의 배경색상을 흰색으로 보이게 처리   
+	//active클래스명을 동적으로 추가할 영역은 nav-item 안쪽의 a 태그의 클래스명을 추가하면 됨.
+	$(".nav-treeview li a").each(function() {
+		if( $(this).attr('href').indexOf(current_2) != -1 )	{
+			//위 문제를 처리하는 대체 함수 indexOf사용
+			$(this).addClass("active");//선택한 메뉴의 배경색상을 흰색으로 보이게 추가하는 처리.
 		} else {
-			$(this).removeClass("active");//선택하지 않은 메뉴의 배경색을 원상복귀
+			$(this).removeClass("active");//선택하지 않은 메뉴의 배경색상 흰색을 제거하는 처리.
 		}
 	});
-	});
-//each함수로 a 태그 2개를 찾는 명령.
-//$(this)현재 함수의 구현 대상 본인을 가리니다.
-//2개의 값을 비교: a태그의 값/admin/member_list, /admin/board_list
-//2개의 값을 비교: 비교대상 current_2(현재 웹브라우저의 url값 중 제일 마지막 값)
-//if( $(this).attr('href').includes(current_2) == true ){ //includes 포함하고 있는 문자열을 비교.
-//위에 사용한 includes란 함수는 크롬에서나 작동이 됨. IE에서는 작동이x. 크로스 브라우징 처리를 해줘야 함.
- </script>
+});
+/*
+each반복함수로 a태그를 찾는 명령. 결과는 2개이기 때문에 2번반복
+$(this) 현재 함수의 구현 대상 본인을 가리킵니다.
+2개의 값을 비교1: - a태그의 값 /admin/member_list, /admin/board_list
+2개의 값을 비교2: - 비교대상 current_2(현재 웹브라우저의 URL값중 제일 마지막 값)
+if( $(this).attr('href').includes(current_2) == true ) {//includes 포함하고 있는 문자열을 비교.
+위에서 사용한 includes함수는 크롬에서만 작동이 되어서 IE에서는 작동이 않됨. 크로스브라우징처리를 해줘야 함.
+*/
+</script>
 </body>
 </html>
 <!-- 관리자단 푸터 끝 -->
