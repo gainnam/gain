@@ -92,4 +92,9 @@ DELETE FROM tbl_member WHERE user_id=#{user_id}
 SELECT * FROM tbl_member WHERE user_id=#{user_id}
 </select>
 
+<!-- <select id="idcheck" resultType="int">
+SELECT count(*) FROM tbl_member WHERE user_id=#{user_id}
+</select>
+ -->
+<!--  현업에서는 위에꺼로 쓰는데 다양하게 해본다고 안한다고함.아이디중복방지. -->
 </mapper>

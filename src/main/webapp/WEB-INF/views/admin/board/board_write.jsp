@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../include/header.jsp" %>
-
+<script src = "/resources/ckeditor/ckeditor.js"><</script>
   <!-- 대시보드 본문 Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- 본문헤더 Content Header (Page header) -->
@@ -49,7 +49,7 @@
                   </div>
                   <div class="form-group">
                   	<label for="content">Content</label>
-                  	<textarea rows="5" name="content" id="content" class="form-control"></textarea>
+                  	<textarea rows="5" name="content" id="content" class="form-control ckeditor"></textarea>
                   	<!-- 필수입력 값은 html5에서 지원하는 유효성 검사중 required 속성을 사용해서 빈(null)값체크(유효성검사)를 합니다. -->
                   </div>
                   <div class="form-group">
@@ -97,4 +97,32 @@
 $(document).ready(function () {
   bsCustomFileInput.init();
 });
+</script>
+<link rel="stylesheet" href="/resources/plugins/summernote/summernote.css">
+<style>
+.note-editor.note-frame.fullscreen{background:white;}
+</style>
+<script src="/resources/plugins/summernote/summernote.js"></script>
+<script>
+$(document).ready(function(){
+	$('#content').summernote({
+		height:150,
+		lang:"ko-KR",
+		placeholder:'글 내용을 입력해 주세요',
+		 toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',[/* 'picture', */'link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+	});
+});//textarea 중 content아이디영역을 섬머노트에디터로 변경처리 함수실행
 </script>
