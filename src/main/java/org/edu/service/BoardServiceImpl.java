@@ -48,6 +48,19 @@ public class BoardServiceImpl implements IF_BoardService {
 	public void insertBoard(BoardVO boardVO) throws Exception {
 		// 게시물 등록 DAO연결(아래)
 		boardDAO.insertBoard(boardVO);
+		// 첨부파일 등록 DAO연결(아래)
+		String[] save_file_names = boardVO.getSave_file_names();
+		String[] real_file_names = boardVO.getReal_file_names();
+		//첨부파일이 여러개일 때 상황 대비
+		int index = 0;
+		String real_file_name = "";
+		if(save_file_names == null) { return; }
+		for(String save_file_name:save_file_names) {//첨부파일이 1개일대는 한 번만 반복됩니다.
+			real_file_name = real_file_names[index];
+			boardDAO.insertAttach(save_file_name, real_file_name);
+			index = index + 1;
+		}
+		
 	}
 
 	@Override
