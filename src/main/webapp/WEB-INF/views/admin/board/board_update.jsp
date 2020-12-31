@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ include file="../include/header.jsp" %>
-<script src = "/resources/ckeditor/ckeditor.js"><</script>
+
   <!-- 대시보드 본문 Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- 본문헤더 Content Header (Page header) -->
@@ -11,12 +11,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">게시글등록</h1>
+            <h1 class="m-0">게시글수정</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">게시글등록</li>
+              <li class="breadcrumb-item active">게시글수정</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -49,7 +49,7 @@
                   </div>
                   <div class="form-group">
                   	<label for="content">Content</label>
-                  	<textarea rows="5" name="content" id="content" class="form-control ckeditor">${boardVO.content}</textarea>
+                  	<textarea rows="5" name="content" id="content" class="form-control">${boardVO.content}</textarea>
                   	<!-- 필수입력 값은 html5에서 지원하는 유효성 검사중 required 속성을 사용해서 빈(null)값체크(유효성검사)를 합니다. -->
                   </div>
                   <div class="form-group">
@@ -63,6 +63,15 @@
                     <input type="file" name="file" class="custom-file-input" id="customFile">
                     <label class="custom-file-label" for="customFile" style="color:#999;">파일첨부</label>
                   </div>
+                  <c:if test="${boardVO.save_file_names[0] != null}">
+	                	<hr>
+		                <strong><i class="far fa-save mr-1"></i> 첨부파일</strong>
+		                <p class="text-muted">
+		                <a href="/download?save_file_name=${boardVO.save_file_names[0]}&real_file_name=${boardVO.real_file_names[0]}">
+		                ${boardVO.real_file_names[0]}-파일다운로드
+		                </a>
+		                </p>
+	              </c:if>
                 </div>
                 <!-- /.card-body -->
               
@@ -110,20 +119,19 @@ $(document).ready(function(){
 		height:150,
 		lang:"ko-KR",
 		placeholder:'글 내용을 입력해 주세요',
-		 toolbar: [
-			    // [groupName, [list of button]]
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']],
-			    ['insert',[/* 'picture', */'link','video']],
-			    ['view', ['fullscreen', 'help']]
-			  ],
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+		toolbar: [
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['link','video']],//'picture',
+				    ['view', ['fullscreen', 'help']]
+				],
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋음체','바탕체'],
+		fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 	});
 });//textarea 중 content아이디영역을 섬머노트에디터로 변경처리 함수실행
 </script>
