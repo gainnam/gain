@@ -3,8 +3,8 @@ package kr.or.test;
 public class ThreadApp {
 
 	public static void main(String[] args) {
-		//메인스레드 시작 진입접 main()
-		//(new ThreadApp()).start();//아래 2줄과 이 1줄은 같음.
+		// 메인스레드 시작 진입점 main()
+		//(new ThreadApp()).start();//아래 2줄과 이곳 1줄과 같습니다.
 		MyThread myThread1 = new MyThread("myThread1");
 		MyThread myThread2 = new MyThread("myThread2");
 		MyThread myThread3 = new MyThread("myThread3");
@@ -17,12 +17,11 @@ public class ThreadApp {
 
 class MyThread extends Thread {
 	public MyThread(String szName) {
-		super();
+		super(szName);
 	}
-	public void run() {//myThread스레드를 start()호출해야지만, 자동실행되는 매서드
+	public void run() {//MyThread스레드를 start()호출해야지만, 자동실행되는 메서드 
 		for(int cnt=0;cnt<100;cnt++) {
 			System.out.print(this.getName() + " ");
-			
 		}
 	}
-} 
+}

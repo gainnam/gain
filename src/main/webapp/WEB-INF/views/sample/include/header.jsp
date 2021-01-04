@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html><!-- 현재문서의 형태선언 -->
 <html><!-- html문서는 태그열고 ~ 태그닫고 하는 영역확인 중요 -->
 <head><!-- 문서내용과는 관계없는 문서정보=메타데이터(데이터의데이터)가 존재 -->
@@ -9,6 +8,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1">
 <title>반응형홈페이지</title><!-- 문서의 제목을 브라우저상단왼쪽에 표시 -->
 <!-- 외부 자바스크립트 불러오는 태그(아래) -->
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><!-- J쿼리코어 -->
 <script src="/resources/sample/js/user.js"></script>
 <!-- 외부 css파일 불러오는 태그(아래) -->
