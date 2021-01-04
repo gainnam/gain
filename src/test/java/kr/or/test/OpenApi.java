@@ -58,7 +58,7 @@ public class OpenApi {
 	public static void main(String[] args) {
 		//메인스레드는 1개, 다른 스레드를 추가로 실행할 때, Runnable메서드를 사용함.(아래)
 		//추가스레드를 스케쥴로 실행할 때, 실행간격으로 사용할 변수(5초로 지정)
-		int sleepSec = 5;
+		int sleepSec = 10;
 		//주기적인 스레드작업(Concurrent동시작업)을 위한 코딩: new키워드로 실행 가능한 오브젝트 변수 exec 변수 생성
 		//final: 현재클래스에서만 사용하겠다는 명시적인 의미
 		final ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
