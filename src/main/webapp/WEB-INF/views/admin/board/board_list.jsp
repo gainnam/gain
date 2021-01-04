@@ -73,9 +73,13 @@
                   </thead>
                   <tbody>
                   <!-- jstl core를 갖다쓰는 이유는 향상된 for반복문을 사용하기 위해서 지정(아래) -->
-                  <c:forEach items="${board_list}" var="boardVO">
+                  <c:forEach items="${board_list}" var="boardVO" varStatus="status">
                   	<tr>
-                      <td>${boardVO.bno}</td>
+                      <td>
+                      <!-- ${boardVO.bno} 대신에 보기편한 넘버링으로 변환(아래 계산식 사용) -->
+                      <!-- 전체게시물-(현재페이지x1페이지당보여줄개수)+1페이지당보여줄개수-현재인덱스값 -->
+                      ${pageVO.totalCount-(pageVO.page*pageVO.queryPerPageNum)+pageVO.queryPerPageNum-status.index}
+                      </td>
                       <!-- 아래 a링크값은 리스트가 늘어날 수록 동적으로 bno값이 변하게 됩니다. 개발자가 jsp처리 -->
                       <td><a href="/admin/board/board_view?page=${pageVO.page}&bno=${boardVO.bno}">
                       <!-- c:out 사용하는 이유는 메롱을 방지하기 위해서 시큐어코딩처리 -->
@@ -111,23 +115,7 @@
               </div>
             <!-- 버튼영역 끝 -->
               
-            <!-- 페이징처리 시작 html 방식이라 주석처리하고 jsp방식 넣음 -->
-          <!--   <div class="pagination justify-content-center">
-            	<ul class="pagination">
-            	 <li class="paginate_button page-item previous disabled" id="example2_previous">
-            	 <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
-            	 </li>
-            	 위 이전게시물링크
-            	 <li class="paginate_button page-item active"><a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">1</a></li>
-            	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0" class="page-link">2</a></li>
-            	 <li class="paginate_button page-item "><a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0" class="page-link">3</a></li>
-            	 아래 다음게시물링크
-            	 <li class="paginate_button page-item next" id="example2_next">
-            	 <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
-            	 </li>
-            	 </ul>
-            </div> -->
-             <!-- 페이징처리 시작 -->
+            <!-- 페이징처리 시작 -->
             <div class="pagination justify-content-center">
             	<ul class="pagination">
             	 <c:if test="${pageVO.prev}">
@@ -142,7 +130,7 @@
             	 	<li class='paginate_button page-item <c:out value="${idx==pageVO.page?'active':''}" />'>
             	 	<a href="/admin/board/board_list?page=${idx}&search_type=${pageVO.search_type}&search_keyword=${pageVO.search_keyword}" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">${idx}</a></li>
             	 </c:forEach>
-						                         <!-- idx 페이징처리의 고유값. -->
+
             	 <c:if test="${pageVO.next}">
 	            	 <!-- 아래 다음게시물링크 -->
 	            	 <li class="paginate_button page-item next" id="example2_next">
@@ -151,8 +139,7 @@
             	 </c:if>
             	 </ul>
             </div>
-	  		<!-- 페이징처리 끝 -->     
-	  		<!-- 페이징처리 끝 -->     
+	  		<!-- 페이징처리 끝 -->
             
           </div>
         </div>
