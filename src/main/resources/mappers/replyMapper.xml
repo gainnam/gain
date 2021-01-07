@@ -2,17 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="replyMapper">
 
-<select id="reply_select" resultType="org.edu.vo.ReplyVO">
-select * from tbl_reply order by rno desc
+<select id="selectReplyCount" resultType="int">
+select count(*)	from tbl_reply 
+where bno = #{bno}
 </select>
 
-<select id="countReply" resultType="int">
-select count(*) from tbl_reply where bno = #{bno}
+<select id="selectReply" resultType="org.edu.vo.ReplyVO">
+select * from tbl_reply 
+where bno = #{bno}
+order by rno desc
+limit #{pageVO.queryStartNo}, #{pageVO.queryPerPageNum}
 </select>
+
+<update id="updateCountReply">
+update tbl_board set reply_count = (select count(*) from tbl_reply where bno = #{bno})
+where bno = #{bno}
+</update>
 
 <insert id="insertReply">
 insert into tbl_reply(bno, reply_text, replyer, reg_date) 
-values(#{bno},#{reply_text},#{replyer}, now())	
+values(#{bno},#{reply_text},#{replyer}, now())
 </insert>
 
 <update id="updateReply">
@@ -25,5 +34,9 @@ where rno = #{rno}
 <delete id="deleteReply">
 delete from tbl_reply 
 where rno = #{rno}
+</delete>
+
+<delete id="deleteReplyAll">
+delete from tbl_reply where bno = #{bno}
 </delete>
 </mapper>
