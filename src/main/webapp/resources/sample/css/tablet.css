@@ -22,7 +22,7 @@ border:none;
 .header .gnb li:last-child {border-bottom:none;}
 .header .gnb li a {
 display:inline-block;/*콘텐츠내용크기만큼만 자리를 차지하는 영역*/
-color:#3f51b5;
+color:#FAEBD7;
 padding-left:0px;/*추가한 부분*/
 margin-right:30px;/*추가한 부분*/
 }
@@ -62,7 +62,7 @@ float:left;/*세로배치가 3개 가로배치로 변함*/
 width:31.59722222222%; /* 3개 중 1개의 가로크기 (242px/768)*100=31.59722222222%*/
 margin-left:2.6041666666%;/*1개 여백구하기 (20px/768)*100=2.6041666666%*/
 height:300px;
-border:  1px solid gold;
+border:  1px solid DAA520;
 }
 .blog-section li div {
 height:200px;

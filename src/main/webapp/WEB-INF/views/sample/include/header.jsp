@@ -34,7 +34,7 @@
 /* 자바스크립트 시작 */
 $(document).ready(function(){
 	$(".carousel").carousel({
-		interval:1000,//이미지가 좌우로 움직이는 대기시간 지정. 1초, 크롬,IE작동OK, 파이어폭스X
+		interval:1800,//이미지가 좌우로 움직이는 대기시간 지정. 1초(1000), 크롬,IE작동OK, 파이어폭스X
 		pause:false
 	});
 });
@@ -58,12 +58,12 @@ $(document).ready(function(){
 <nav class="gnb"><!-- gnb:글로벌네이게이션:전체영역메뉴  Global Navigagion -->
 <!-- 리스트를 모여주는 태그 ul(UnOrdered List *.~, *.~ ) , ol(Ordered List 1.~, 2.~ ) -->
 <ul>
-<li><a href="/">HOME</a></li>
-<li><a href="/weare">WE ARE</a></li>
-<li><a href="/work">WORK</a></li>
-<li><a href="/blog">BLOG</a></li>
-<li><a href="/contact">CONTACT US</a></li>
-<li><a href="/admin">AdminLTE</a></li>
+<li><a href="/sample">Sample HOME</a></li>
+<li><a href="/sample/weare">WE ARE</a></li>
+<li><a href="/sample/work">WORK</a></li>
+<li><a href="/sample/blog">BLOG</a></li>
+<li><a href="/sample/contact">CONTACT US</a></li>
+<li><a href="/admin">HOME</a></li>
 </ul>
 </nav>
 <!-- 상단 로고와 햄버거 메뉴영역 끝 -->

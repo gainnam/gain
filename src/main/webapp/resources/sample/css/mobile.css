@@ -7,6 +7,7 @@ body {/*부트스트랩css또는 reset.css에서 초기화 된 것을 재정의 
 	background:#fff;
 	line-height:1.4 !important;/*상속 바로 전에 적용한 값을 초기화inherit=initial(크로스브라우징이안됨) 시키는 역할*/
 	font-family: 'Nanum Gothic', 'NanumGothic' !important;
+	background:black !important; /* 내가추가 */
 	}/*부트스트랩css영향을 받은 것을 무효화시키고, 사용자css로 적용*/
 	/*부트스트랩css영향을 받는 부분을 무효화 시키기(아래)*/
 ul {
@@ -26,7 +27,7 @@ float:left;/*플로트: 떠다니는 영역. 역할은 세로배치를 가로배
 }
 .header .logo a {
 font-size:26px;/*글자크기*/
-color:#3f51b5;/*글자색상*/
+color:#fff;/*글자색상*/
 font-weight:normal;/*글자두께*/
 text-indent:-9999%;/*들여쓰기*/
 display:block;
@@ -44,7 +45,7 @@ cursor:pointer;/*마우스커서모양을 손모양으로 변경*/
 .menu-toggle-btn span {
 display:block;height:2px;
 width:100%;/*여기서 100% .menu-toggle-btn영역의 가로20px 까지가 100%임*/
-background:#3f51b5;
+background:#FAEBD7;
 margin-bottom:5px;
 }
 .header .gnb {
@@ -53,23 +54,23 @@ position:absolute;/*gnb영역의 위치를 절대위치로 지정 위치정보�
 top:80px;/*화면상단에서 얼만큼 떨어지게 배치할 건지 지정*/
 left:0px;/*화면왼쪽에서 얼만큼 떨어지게 배치할지 저정*/
 width:100%;
-background:#3f51b5;
+background:#DAA520;
 z-index:21;/*화면에서 콘텐츠가 겹치는경우 z인덱스*/
 }
 .header .gnb li {
 /*border는 테두리 bottom:아래,top:위,left-right:좌-우 1px(두께),solid(실선),#16진수(색상) */
-border:1px solid #303f9f;
+border:1px solid #2F4F4F;
 border-bottom:0px;
 }
 /*가상선택자 : 사용*/
 .header .gnb li:last-child {
-border-bottom:1px solid #303f9f;
+border-bottom:1px solid #2F4F4F;
 }
 .header .gnb li a {
 display:block;/* 1줄 1글자라도 전체 자리를 차지하는 영역 : ()inline-block 자리를 차지하지만, 본인크기만) */
 padding:14px 0 14px 5%;
 font-size:14px;
-color:#fff;
+color:#FAEBD7; /* 베이지색상 글씨 */
 }
 /* 헤더영역 끝 */
 /* 본문섹션 슬라이드영역 시작 */
@@ -79,11 +80,11 @@ color:#fff;
 /* 푸터영역 시작 */
 .footer {
 padding-top:30px;/*margin-top 작동을 하지 않아서 padding-top으로 변경*/
-background:mistyrose;
+/* background:mistyrose; */
 }
 .footer p {
 margin: 21px 0px;
-color:#3f51b5;
+color:#FAEBD7 !important;
 text-align:center;/*문장내용을 가로 가운데 정렬*/
 }
 /* 푸터영역 끝 */
@@ -96,12 +97,12 @@ text-align:center;
 .section-title {
 margin-bottom:30px;
 font-size:42px;
-color:#3f51b5;
+color:#FAEBD7;
 font-weight:normal;
 letter-spacing:5px;/* 글자사이 간격주기 */
 }
 .weare-header p {
-color:#616161;
+color:#FAEBD7;
 line-height:1.9;/* 줄간격 단위 1.9 글자크기의 배수 */
 font-size:14px;
 }
@@ -119,7 +120,7 @@ height:220px;/*이미지는 가로든 세로든 1쪽 크기를 지정하면, 비
 margin: 20px 0px;
 font-size:32px;
 font-weight:normal;
-color:#3f41b5;
+color:#FAEBD7;
 }
 .weare-body li p {font-size:14px;}
 /* we are페이지 영역 끝*/ 
@@ -139,7 +140,7 @@ position:relative;/*a태그에서 위치를 상대위치로 지정*/
 /*마우스를 롤오버했을때 나오는 배경색상 before가상요소 영역(아래)*/
 .work-section li a::before {
 display:block;
-background:#3f51b5;
+background:#fff;
 /*이 절대값 위치는 위 a태그에서 지정한 relative상대위치에 한정해서 절대위치로 지정됨(아래)*/
 position:absolute;
 width:100%;
@@ -181,7 +182,7 @@ margin-top:30px;
 .blog-section h1{
 text-align:center;
 font-size:42px;
-color:#3f51b5;
+color:#FAEBD7;
 font-weight:normal;
 }
 .blog-section .container{width:90%;margin:0 auto;}
@@ -196,15 +197,15 @@ width:100%;
 display:block;
 margin:10px 0px;
 font-size:12px;
-color:#888;
+color:#FAEBD7;
 }
 .blog-section li h2 {
-color:#424242;
+color:#FAEBD7;
 font-weight:normal;
 line-height:1,6;/*줄간격단위는 현재 글자크기의 배수*/
 }
 /*reset.css에서 hr태그를 display:nene;적용했기 때문에 특별히 .blog영역에서만 hr적용*/
-.blog-section hr {display:block; height:1px; color:#3f51b5;}
+.blog-section hr {display:block; height:1px; color:#DAA520;}
 /*blog영역 끝*/
 /* CONTACT 영역 시작*/
 .contact-section {
@@ -213,7 +214,7 @@ margin-top:30px;
 .contact-section h1 {
 text-align:center;
 font-size:42px;
-color:#3f51b5;
+color:#FAEBD7;
 font-weight:normal;
 }
 .contact-section .container {
@@ -230,7 +231,7 @@ line-height:1.2;
 padding:0 2px;
 height:40px;
 border:none;
-border-bottom:1px solid #ccc;/* 테두리 선설정: 2px(굵기) solid(실선),dotted(점선), 선색상*/
+border-bottom:1px solid #2F4F4F;/* 테두리 선설정: 2px(굵기) solid(실선),dotted(점선), 선색상*/
 background:transparent; /*배경색상 투명처리*/
 }
 .contact-section form textarea {
@@ -238,7 +239,7 @@ width:100%;
 background:transparent;
 line-height:1.2;
 border:none;
-border-bottom:1px solid #ccc;
+border-bottom:1px solid #2F4F4F;
 min-height:100px;/*최소높이를 지정하는 이유는 내용이 없더라도, 높이를 100px로 지정하는 의미*/
 padding-top:10px;
 padding-bottom:10px;
@@ -246,8 +247,8 @@ padding-bottom:10px;
 .contact-section form button {
 padding:15px;/*여백이 있는 버튼을 만들기*/
 font-size:12px;
-background:#3f51b5;
-color:#fff;
+background:#DAA520;
+color:#FAEBD7;
 border:0px;
 }
 .submit-btn {
