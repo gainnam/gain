@@ -14,10 +14,12 @@ import org.edu.service.IF_BoardService;
 import org.edu.service.IF_MemberService;
 import org.edu.util.CommonController;
 import org.edu.util.SecurityCode;
+import org.edu.vo.AttachVO;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -51,16 +53,23 @@ public class AdminController {
 	@RequestMapping(value="/admin/board/board_delete",method=RequestMethod.POST)
 	public String board_delete(RedirectAttributes rdat,PageVO pageVO, @RequestParam("bno") Integer bno) throws Exception {
 		//기존등록된 첨부파일 폴더에서 삭제할 UUID파일명 구하기(아래)
-		List<HashMap<String,Object>> delFiles = boardService.readAttach(bno);
+		List<AttachVO> delFiles = boardService.readAttach(bno);
+		/*List<HashMap<String,Object>> delFiles_noUse = boardService.readAttach_noUse(bno);*/
 		boardService.deleteBoard(bno);
 		//첨부파일 삭제:DB부터 먼저삭제 후 폴더에서 첨부파일 삭제
-		for(HashMap<String,Object> file_name:delFiles) {
+		for(AttachVO file_name:delFiles){
 			//파일 삭제 로직(아래 File클래스(폴더경로,파일명)
-			File target = new File(commonController.getUploadPath(), (String) file_name.get("save_file_name"));
+			File target = new File(commonController.getUploadPath(), file_name.getSave_file_name());
 			if(target.exists()) {
 				target.delete();//실제 파일 지워짐.
 			}
 		}
+		/*
+		 * for(HashMap<String,Object> file_name:delFiles_noUse) { //파일 삭제 로직(아래
+		 * File클래스(폴더경로,파일명) File target = new File(commonController.getUploadPath(),
+		 * (String) file_name.get("save_file_name")); if(target.exists()) {
+		 * target.delete();//실제 파일 지워짐. } }
+		 */
 		rdat.addFlashAttribute("msg", "삭제");
 		return "redirect:/admin/board/board_list?page=" + pageVO.getPage();//삭제할 당시의 현재페이지를 가져가서 리스트로보줌
 	}
@@ -69,15 +78,22 @@ public class AdminController {
 	public String board_update(@RequestParam("bno") Integer bno,@ModelAttribute("pageVO") PageVO pageVO,Model model) throws Exception {
 		BoardVO boardVO = boardService.readBoard(bno);
 		
-		List<HashMap<String, Object>> files = boardService.readAttach(bno);
+		List<AttachVO> files = boardService.readAttach(bno);
+		//List<HashMap<String, Object>> files_noUse = boardService.readAttach_noUse(bno);
 		String[] save_file_names = new String[files.size()];
 		String[] real_file_names = new String[files.size()];
 		int cnt = 0;
-		for(HashMap<String, Object> file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
-			save_file_names[cnt] = (String) file_name.get("save_file_name");//형변환 cast
-			real_file_names[cnt] = (String) file_name.get("real_file_name");
+		for(AttachVO file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
+			save_file_names[cnt] = file_name.getSave_file_name();
+			real_file_names[cnt] = file_name.getReal_file_name();
 			cnt = cnt + 1;
 		}
+		/*
+		 * for(HashMap<String, Object> file_name:files_noUse) {//세로데이터를 가로데이터로 변경하는 로직
+		 * save_file_names[cnt] = (String) file_name.get("save_file_name");//형변환 cast
+		 * real_file_names[cnt] = (String) file_name.get("real_file_name"); cnt = cnt +
+		 * 1; }
+		 */
 		//배열형출력값(가로) {'save_file_name0','save_file_name1',...}
 		boardVO.setSave_file_names(save_file_names);
 		boardVO.setReal_file_names(real_file_names);
@@ -91,7 +107,8 @@ public class AdminController {
 	@RequestMapping(value="/admin/board/board_update",method=RequestMethod.POST)
 	public String board_update(RedirectAttributes rdat,@RequestParam("file") MultipartFile[] files, BoardVO boardVO, PageVO pageVO) throws Exception {
 		//기존 등록된 첨부파일 목록 구하기
-		List<HashMap<String,Object>> delFiles = boardService.readAttach(boardVO.getBno());
+		List<AttachVO> delFiles = boardService.readAttach(boardVO.getBno());
+		//List<HashMap<String,Object>> delFiles_noUse = boardService.readAttach_noUse(boardVO.getBno());
 		//jsp에 보낼 save_file_names, real_file_names 배열변수 초기값 지정
 		String[] save_file_names = new String[files.length];
 		String[] real_file_names = new String[files.length];
@@ -101,14 +118,30 @@ public class AdminController {
 			if(file.getOriginalFilename() != "") {//첨부파일명이 있으면
 				//기존파일 DB에서 삭제처리할 변수 생성한 이유:업데이트jsp에서 첨부파일 개별삭제시 순서가 필요하기때문
 				int cnt = 0;
-				for(HashMap<String,Object> file_name:delFiles) {
+				for(AttachVO file_name:delFiles) {
+					save_file_names[cnt] = file_name.getSave_file_name();
+					real_file_names[cnt] = file_name.getReal_file_name();
+					cnt = cnt + 1;//반복시 증가
+				}
+				/*for(HashMap<String,Object> file_name:delFiles_noUse) {
 					save_file_names[cnt] = (String) file_name.get("save_file_name");
 					real_file_names[cnt] = (String) file_name.get("real_file_name");
 					cnt = cnt + 1;//반복시 증가
-				}
+				}*/
 				int sun = 0;//업데이트jsp화면에서 첨부파일을 개별 삭제시 사용할  순서가 필요하기때문 변수 추가
 				//기존파일 폴더에서 실제파일 삭제 처리
-				for(HashMap<String,Object> file_name:delFiles) {
+				for(AttachVO file_name:delFiles) {
+					if(index == sun) {//index는 첨부파일개수 , sun삭제할 개별순서
+						File target = new File(commonController.getUploadPath(),file_name.getSave_file_name());
+						if(target.exists()) {
+							target.delete();//폴더에서 기존첨부파일 지우기
+						}
+					}
+					//서비스클래스에는 첨부파일DB를 지우는 메서드가 없음. DAO를 접근해서 tbl_attach를 지웁니다.
+					boardDAO.deleteAttach(file_name.getSave_file_name());
+					sun = sun + 1;//개별삭제는 for문에서 딱 1번 뿐이기 때문에
+				}
+				/*for(HashMap<String,Object> file_name:delFiles_noUse) {
 					if(index == sun) {//index는 첨부파일개수 , sun삭제할 개별순서
 						File target = new File(commonController.getUploadPath(), (String) file_name.get("save_file_name"));
 						if(target.exists()) {
@@ -118,7 +151,7 @@ public class AdminController {
 					//서비스클래스에는 첨부파일DB를 지우는 메서드가 없음. DAO를 접근해서 tbl_attach를 지웁니다.
 					boardDAO.deleteAttach((String) file_name.get("save_file_name"));
 					sun = sun + 1;//개별삭제는 for문에서 딱 1번 뿐이기 때문에
-				}
+				}*/
 				//신규파일 폴더에 업로드 처리
 				save_file_names[index] = commonController.fileUpload(file);//폴더에 업로드저장완료
 				real_file_names[index] = file.getOriginalFilename();//"한글파일명.jpg"
@@ -186,15 +219,21 @@ public class AdminController {
 		// {'save_file_name1'},
 		// ..
 		//]
-		List<HashMap<String, Object>> files = boardService.readAttach(bno);
+		List<AttachVO> files = boardService.readAttach(bno);
+		//List<HashMap<String, Object>> files_noUse = boardService.readAttach_noUse(bno);
 		String[] save_file_names = new String[files.size()];
 		String[] real_file_names = new String[files.size()];
 		int cnt = 0;
-		for(HashMap<String, Object> file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
+		for(AttachVO file_name:files) {//세로데이터를 가로데이터로 변경하는 로직
+			save_file_names[cnt] = file_name.getSave_file_name();//형변환 cast
+			real_file_names[cnt] = file_name.getReal_file_name();
+			cnt = cnt + 1;
+		}
+		/*for(HashMap<String, Object> file_name:files_noUse) {//세로데이터를 가로데이터로 변경하는 로직
 			save_file_names[cnt] = (String) file_name.get("save_file_name");//형변환 cast
 			real_file_names[cnt] = (String) file_name.get("real_file_name");
 			cnt = cnt + 1;
-		}
+		}*/
 		//배열형출력값(가로) {'save_file_name0','save_file_name1',...}
 		boardVO.setSave_file_names(save_file_names);
 		boardVO.setReal_file_names(real_file_names);
@@ -250,6 +289,12 @@ public class AdminController {
 	@RequestMapping(value="/admin/member/member_write",method=RequestMethod.POST)
 	public String member_write(MemberVO memberVO) throws Exception {
 		//아래 GET방식의 폼 출력화면에서 데이터 전송받은 내용을 처리하는 바인딩.
+		//POST방식으로 넘어온 user_pw값을 BCryptPasswordEncoder클래스로 암호화시킴
+		if(memberVO.getUser_pw() != null) {
+			BCryptPasswordEncoder passwordencoder = new BCryptPasswordEncoder();
+			String userPwEncoder = passwordencoder.encode(memberVO.getUser_pw());
+			memberVO.setUser_pw(userPwEncoder);
+		}
 		//DB베이스 입력/출력/삭제/수정 처리-다음에...
 		memberService.insertMember(memberVO);
 		return "redirect:/admin/member/member_list";//절대경로로 처리된 이후에 이동할 URL주소를 여기에 반환
@@ -270,6 +315,12 @@ public class AdminController {
 	
 	@RequestMapping(value="/admin/member/member_update",method=RequestMethod.POST)
 	public String member_update(PageVO pageVO, MemberVO memberVO) throws Exception {
+		//POST방식으로 넘어온 user_pw값을 BCryptPasswordEncoder클래스로 암호화시킴
+		if(memberVO.getUser_pw() != null) {
+			BCryptPasswordEncoder passwordencoder = new BCryptPasswordEncoder();
+			String userPwEncoder = passwordencoder.encode(memberVO.getUser_pw());
+			memberVO.setUser_pw(userPwEncoder);
+		}
 		//POST방식으로 넘어온 값을 DB수정처리하는 역할
 		memberService.updateMember(memberVO);
 		//redirect를 사용하는 목적은 새로고침 했을때, 위 updateMember메서드를 재 실행방지 목적입니다.

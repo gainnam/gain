@@ -1,6 +1,8 @@
 package org.edu.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -10,11 +12,16 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FilenameUtils;
 import org.edu.dao.IF_BoardDAO;
 import org.edu.service.IF_MemberService;
 import org.edu.vo.BoardVO;
 import org.edu.vo.MemberVO;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.FileCopyUtils;
@@ -68,6 +75,42 @@ public class CommonController {
 		this.uploadPath = uploadPath;
 	}
 	
+	/**
+	 * 게시물 첨부파일 이미지보기 메서드 구현(스프링 시큐리티 적용 후 IE에서 지원 가능)
+	 * 에러메시지 처리: getOutputStream() has already been called for this respons
+	 * @throws IOException 
+	 */
+	@RequestMapping(value = "/image_preview", method = RequestMethod.GET, produces = MediaType.IMAGE_JPEG_VALUE)
+	@ResponseBody
+	public ResponseEntity<byte[]> getImageAsByteArray(@RequestParam("save_file_name") String save_file_name, HttpServletResponse response) throws IOException {
+		FileInputStream fis = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		fis = new FileInputStream(uploadPath + "/" + save_file_name);//업로드된 이미지를 fis변수 저장
+		int readCount = 0;
+		byte[] buffer = new byte[1024];//1KB단위로 읽어들임
+		byte[] fileArray = null;
+	while((readCount = fis.read(buffer)) != -1){
+		baos.write(buffer,0,readCount);
+	}
+	fileArray = baos.toByteArray();//바이트 단위로 돼있는 변수에 아웃풋스트림내용을 저장해서 return으로 반환
+	fis.close();//고전 자바프로그램에서는 메모리 관리를 위해서 fis파일인풋스트림 생성 후 소멸시키는 작업이 필수
+	baos.close();//스프링프레임워크 기반의 프로그램구조에서는 close와 같은 메모리관리가 할 필요없습니다. 스프링에garbagecollect기능이 내장
+	final HttpHeaders headers = new HttpHeaders();//크롬 개발자도구>네트워크>image_preview클릭>헤더탭확인
+	String ext = FilenameUtils.getExtension(save_file_name);//파일 확장자 구하기
+	switch(ext) {
+	case "png":
+		headers.setContentType(MediaType.IMAGE_PNG);break;
+	case "jpg":
+		headers.setContentType(MediaType.IMAGE_JPEG);break;
+	case "gif":
+		headers.setContentType(MediaType.IMAGE_GIF);break;
+	case "jpeg":
+		headers.setContentType(MediaType.IMAGE_JPEG);break;
+	case "bmp":headers.setContentType(MediaType.parseMediaType("image/bmp"));break;
+	default:
+	}
+	return new ResponseEntity<byte[]>(fileArray, headers, HttpStatus.CREATED);
+	}
 	//파일 다운로드 구현한 메서드(아래)
 	@RequestMapping(value="/download", method=RequestMethod.GET)
 	@ResponseBody //이 애노테이션으로 지정된 메서드는 페이지 이동처리아니고, RestAPI처럼 현재페이지에 구현결과를 전송받습니다.
