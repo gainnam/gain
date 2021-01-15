@@ -229,7 +229,7 @@ $(document).ready(function() {
 			},
 			data:JSON.stringify({
 				rno:rno,
-				reply_text:reply_text,
+				reply_text:reply_text
 			}),
 			dataType:"text",
 			success:function(result){
