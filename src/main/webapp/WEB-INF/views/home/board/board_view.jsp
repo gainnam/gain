@@ -229,7 +229,7 @@ $(document).ready(function() {
 			},
 			data:JSON.stringify({
 				rno:rno,
-				reply:reply_text,
+				reply_text:reply_text,
 			}),
 			dataType:"text",
 			success:function(result){
@@ -264,10 +264,10 @@ $(document).ready(function() {
 			success: function(result){
 				if(result=="success") {
 					alert("댓글이 삭제되었습니다");
-					var reply_count = $("reply_count").text();//get
-					$("reply_count").text(parseInt(reply_count)-1);//set
+					var reply_count = $("#reply_count").text();//get
+					$("#reply_count").text(parseInt(reply_count)-1);//set
 					replyList();//삭제 후 댓글리스트 재실행
-					$("replyModal").modal("hide");//모달창을 닫는 JQuery내장함수
+					$("#replyModal").modal("hide");//모달창을 닫는 JQuery내장함수
 				}else{
 					alert("댓글이 삭제되지 않았습니다");
 				}
@@ -313,8 +313,8 @@ $(document).ready(function() {
 				replyer:replyer
 			}),
 			success:function(result) {//응답이 성공하면(상태값200)위경로에서 반환받은 result(json데이터)를 이용해서 화면을 재구현
-				var reply_count = $("reply_count").text();//get
-				$("reply_count").text(parseInt(reply_count)+1);//set
+				var reply_count = $("#reply_count").text();//get
+				$("#reply_count").text(parseInt(reply_count)+1);//set
 				//댓글3페이지를 보고있다가, 댓글 입력-> 입력한 댓글 확인할 수 있게 1페이지로 유도
 				$("#reply_page").val("1");//그래서 1페이지 값으로 set
 				replyList();
