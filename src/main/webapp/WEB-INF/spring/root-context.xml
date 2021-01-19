@@ -19,7 +19,7 @@
             	<!-- 로컬 개발일 때 사용 -->
                 <!-- <value>classpath:/properties/local.properties</value> -->
                 <!-- 운영 서버(배포)일 때 사용 -->
-                <value>file:/properties/prod.properties</value>
+                <value>classpath:/properties/prod.properties</value>
             </list>
         </property>
     </bean>
