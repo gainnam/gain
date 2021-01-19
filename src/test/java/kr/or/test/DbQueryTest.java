@@ -14,7 +14,7 @@ public class DbQueryTest {
 				Statement stmt = null;
 				ResultSet rs = null;
 				try {
-					connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db");
+					connection = DriverManager.getConnection("jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false");
 					//직접 쿼리를 날립니다.(아래)
 					stmt = connection.createStatement();
 					

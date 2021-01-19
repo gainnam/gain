@@ -11,39 +11,59 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- HSQLDB FILE기반 사용 헤로쿠에 올릴때 경로는 /tmp/embeded/edu.db , 로컬PC일때 경로는 c:/egov/workspace/embeded/edu.db -->   
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	<!-- 전역변수 설정 파일 불러오기 local, prod용 properties class 사용 -->
+	<bean id="propertyConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+            	<!-- 로컬 개발일 때 사용 -->
+                <!-- <value>classpath:/properties/local.properties</value> -->
+                <!-- 운영 서버(배포)일 때 사용 -->
+                <value>file:/properties/prod.properties</value>
+            </list>
+        </property>
+    </bean>
+	<!-- 알리아스(Alias)별칭인 dataSource을 만들어서 사용할 수도 있음.(junit테스트에서 dataSource변수사용가능하게 처리) -->
+	<alias name="dataSource-${DbType}" alias="dataSource" />
+	
+<!-- HSQLDB FILE기반 사용 헤로쿠에 올릴때 생성경로는 /tmp/embeded/hsql_file.db;hsqldb.lock_file=false , 로컬PC일때 경로는 c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false -->   	
+	<bean id="dataSource-hsql_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:file:/tmp/embeded/hsql_file.db" />
+		<property name="url" value="jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
-	
+	<bean id="dataSource-hsql_prod" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
+		<property name="url" value="jdbc:hsqldb:file:/tmp/embeded/hsql_file.db;hsqldb.lock_file=false" />
+		<property name="username" value="sa" />
+		<property name="password" value="" />
+	</bean>
 	<!-- CREATE TABLE 초기 1회만 실행 -->
-	
+	<!-- 
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"> 
 		<jdbc:script location="classpath:/db/embeded_hsql_file.sql" /> 
 	</jdbc:initialize-database>
-	
-	<!-- jdbc:hsqldb:mem:dataSource / jdbc:hsqldb:file:c:/egov/workspace/embeded/edu.db -->
+	 -->
+	<!-- jdbc:hsqldb:mem:dataSource / jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false -->
 	<!-- 테스트 실행용 DB매니저 실행:실제 사용시 아래 value - - 공백제거 하세요. -->
-	
-	<!-- <bean depends-on="dataSource"
+	<!-- 
+	<bean depends-on="dataSource-hsql_local"
 	class="org.springframework.beans.factory.config.MethodInvokingBean">
 	<property name="targetClass" value="org.hsqldb.util.DatabaseManagerSwing" />
 	<property name="targetMethod" value="main" />
 	<property name="arguments">
 		<list>
 			<value>- -url</value>
-			<value>jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db</value>
+			<value>jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false</value>
 			<value>- -user</value>
 			<value>sa</value>
 			<value>- -password</value>
 			<value></value>
 		</list>
 	</property>
-	</bean> -->
-	
+	</bean>
+	 -->
 	
 	<!-- 로컬 mysql log4jdbc 설정전 -->
 	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -54,14 +74,15 @@
 	</bean> -->
 	
 	<!-- 로컬 mysql log4jdbc 설정후 -->
-	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	 
+	<bean id="dataSource-mysql_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" 
 				  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
 		<property name="url" 
 				  value="jdbc:log4jdbc:mysql://127.0.0.1:3306/edu"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="apmsetup"></property>
-	</bean> -->
+	</bean>
 	
 	<!--
 		DataSource 설정으로 JDBC 연결후, MyBatis와 MySql을 연동시킴. 
@@ -70,7 +91,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">	   
 	 	<property name="dataSource" ref="dataSource" />
 	 	<!-- 매퍼 xml로만든 쿼리파일의 경로를 인식하게 함.(아래 classpath경로 src/main/resources/쿼리xml) -->
-	 	 <property name="mapperLocations" value="classpath:mappers/**/*Mapper.xml"></property>
+	 	 <property name="mapperLocations" value="classpath:mappers/**/${MapperType}/*Mapper.xml"></property>
 	</bean>
 	
 	<!-- 
@@ -94,6 +115,7 @@
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
+	
 	<!-- 배치작업 -->
 	<bean id="herokuJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 	    <!-- 서비스 구현 객체의 빈 이름을 인자로 줍니다. -->
@@ -103,17 +125,21 @@
 	    <!-- 동시 실행을 방지합니다. -->
 	    <property name="concurrent" value="false" />
 	</bean>
-<bean id="herokuJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	<bean id="herokuJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
 	    <property name="jobDetail" ref="herokuJob" />
 	    <!-- 월-금 오전 8시부터 23(미국시간0-14)시까지 사이에 20분 간격으로 실행 참조: https://nhj12311.tistory.com/283 -->
 	    <property name="cronExpression" value="0 0/20 23,0-14 ? * MON,TUE,WED,THU,FRI" />
 	</bean>
-<!-- 배치작업 테스트용 스케줄러 -->
+	<!-- 배치작업 테스트용 스케줄러 -->
 	<bean id="herokuJobScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
 	    <property name="triggers">
 	        <!-- 앞에서 설정한 트리거를 등록합니다. 필요하면 여러개 만들어서 등록하면 됩니다. -->
 	        <list><ref bean="herokuJobTrigger" /></list>
 	    </property>
 	</bean>
-	 
+	<!-- 업로드한 파일이 저장되는 위치: 로컬PC용 C:\\egov\\workspace\\upload -->
+	<!-- 헤로쿠용: /tmp --> 
+	<bean id="uploadPath" class="java.lang.String">
+	    <constructor-arg value="${UploadPath}" />
+	</bean>
 </beans>

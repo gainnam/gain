@@ -26,7 +26,7 @@
 </style>
 <script>
 if('${msg}' !='') {//자바의 EL표기법 달라{변수명}
-	alert("${msg}를(을) 성공하였습니다.");
+	alert("${msg}을(를) 성공하였습니다.");
 }
 </script>
 </head>
