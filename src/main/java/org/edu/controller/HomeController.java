@@ -8,17 +8,22 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.edu.dao.IF_BoardDAO;
 import org.edu.service.IF_BoardService;
+import org.edu.service.IF_MemberService;
 import org.edu.util.CommonController;
 import org.edu.util.SecurityCode;
 import org.edu.vo.AttachVO;
 import org.edu.vo.BoardVO;
+import org.edu.vo.MemberVO;
 import org.edu.vo.PageVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,6 +41,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class HomeController {
 	
 	//private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	@Inject
+	private IF_MemberService memberService;
+	
 	@Inject
 	private IF_BoardService boardService;
 	
@@ -219,17 +227,57 @@ public class HomeController {
 		model.addAttribute("board_list", board_list);
 		return "home/board/board_list";
 	}
-	
+	//사용자 홈페이지 회원 마이페이지 수정 매핑
+	@RequestMapping(value="/member/mypage_update", method=RequestMethod.POST)
+	public String mypage_update(HttpServletRequest request, MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+		//스프링시큐리티에서 제공하는 passwordEncoder 암호화 처리(아래)
+		if(memberVO.getUser_pw() != "") {
+			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			String user_pw_encode = passwordEncoder.encode(memberVO.getUser_pw());
+			memberVO.setUser_pw(user_pw_encode);
+		}
+		memberService.updateMember(memberVO);
+		HttpSession session = request.getSession();
+		session.setAttribute("session_username", memberVO.getUser_name());//세션 재발생(기존세션 덮어쓰기)
+		
+		rdat.addFlashAttribute("msg", "수정");
+		return "redirect:/member/mypage";
+	}
 	//사용자 홈페이지 회원 마이페이지 접근 매핑
 	@RequestMapping(value="/member/mypage",method=RequestMethod.GET)
-	public String mypage() throws Exception{
-		
+	public String mypage(HttpServletRequest request, Model model) throws Exception{
+		//마이페이지는 로그인 상태만 접근 가능하기 때문에, 로그인세션(변수) 중 세션 아이디 값(변수) session_userid
+		HttpSession session = request.getSession();
+		MemberVO memberVO = memberService.readMember((String) session.getAttribute("session_userid"));
+		model.addAttribute("memberVO", memberVO);
 		return "home/member/mypage";
 	}
-	
+	//사용자 홈페이지 회원탈퇴 매핑
+		@RequestMapping(value="/member/member_disabled",method=RequestMethod.POST)
+		public String member_disabled(HttpServletRequest request, MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+			memberService.updateMember(memberVO);
+			//세션값 invalidate() 삭제하기.
+			request.getSession().invalidate();
+			rdat.addFlashAttribute("msg", "회원탈퇴");
+			return "redirect:/";
+		}
+
+	//사용자 홈페이지 회원가입 처리 매핑
+	@RequestMapping(value="/join", method=RequestMethod.POST)
+	public String join(MemberVO memberVO, RedirectAttributes rdat) throws Exception {
+		//아래 3줄이 스프링 시큐리티에서 제공하는 패스워드 암호화처리
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String user_pw_encode = passwordEncoder.encode(memberVO.getUser_pw());
+		memberVO.setUser_pw(user_pw_encode);
+		
+		memberService.insertMember(memberVO);
+		rdat.addFlashAttribute("msg", "회원가입");
+		return "redirect:/login";
+	}
+		
 	//사용자 홈페이지 회원가입 접근 매핑
 	@RequestMapping(value="/join",method=RequestMethod.GET)
-	public String join() throws Exception{
+	public String join() throws Exception {
 		
 		return "home/join";
 	}
@@ -249,10 +297,10 @@ public class HomeController {
 		int cnt = 0;
 		for(BoardVO boardVO:board_list) {//board_list변수에는 최대 5개의 레코드가 존재함
 			List<AttachVO> file_list = boardService.readAttach(boardVO.getBno());
-			System.out.println("디버그-file_list" + file_list);
+			//System.out.println("디버그-file_list" + file_list);
 			if(file_list.size() == 0) {//첨부파일이 없을 때
 				save_file_names[cnt] = "";
-				System.out.println("디버그-[" + cnt + "]" + save_file_names[cnt]);
+				//System.out.println("디버그-[" + cnt + "]" + save_file_names[cnt]);
 				//continue //continue아래있는 조건은 실행안하고 건너뜀
 			}else {
 			for(AttachVO file_name:file_list) {
@@ -261,7 +309,7 @@ public class HomeController {
 				boolean imgCheck = commonController.getCheckImgArray().contains(extName.toLowerCase());
 				if(imgCheck) {//첨부파일이 이미지일 때
 					save_file_names[cnt] = save_file_name;
-					System.out.println("디버그[" + cnt + "]" + save_file_names[cnt]);
+					//System.out.println("디버그[" + cnt + "]" + save_file_names[cnt]);
 					break;//이중 반복문에서 현재 for문만 종료
 					}else {//첨부파일이 이미지가 아닌 파일일 때
 						save_file_names[cnt] = "";

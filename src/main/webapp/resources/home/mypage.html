@@ -42,9 +42,9 @@
 $(document).ready(function() {
 	$(".appForm").validate({
 		rules: {
-			password: "required",
-			password_chk: {
-				equalTo: "#password_lbl"
+			user_pw: "required",
+			user_pw_chk: {
+				equalTo: "#user_pw_lbl"
 			}
 		}
 	});

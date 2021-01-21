@@ -245,12 +245,13 @@ input::placeholder {
 }
 .app_content input {
 	border: none;
-	width: 100% !important;
+	/* width: 100% !important; */
+	width: inherit;
 	box-sizing: border-box;
 	display: inline-block;
 	height: 45px;
 	padding: 0 10px;
-	background-color: #fff;
+	/* background-color: #fff; 이클립스 내장브라우저에서 안나올 때 조치사항*/
 	line-height: normal;
 	font-size: 15px;
 }
