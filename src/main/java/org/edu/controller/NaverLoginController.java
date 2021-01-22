@@ -6,6 +6,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.edu.util.NaverLoginApi;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 
@@ -16,6 +18,7 @@ import com.github.scribejava.core.model.Response;
 import com.github.scribejava.core.model.Verb;
 import com.github.scribejava.core.oauth.OAuth20Service;
 
+@PropertySource("classpath:properties/sns.properties")//현재클래스에서 전역변수사용시 필요 
 @Controller
 public class NaverLoginController {
  /*
@@ -25,9 +28,15 @@ public class NaverLoginController {
   * redirect_url: 네이버 로그인 인증결과를 전달 받는 콜백 URL
   * state: 네이버 App이 생성한 토큰의 상태(네트웍에서 전송되는 자료단위-인증정보)의 상태
   */
-	private final static String CLIENT_ID = "mLPPJrhSRd4Hi8DbS4ML";
-	private final static String CLIENT_SECRET = "aIOv73PAav";
-	private final static String RDIRECT_URI = "http://127.0.0.1:8080/login_callback";
+	@Value ("${SnsClientID}")
+	private String CLIENT_ID;
+	@Value ("${SnsClientSecret}")
+	private String CLIENT_SECRET;
+	@Value ("${SnsCallbackUri}")
+	private String RDIRECT_URI;
+	//private final static String CLIENT_ID = "";
+	//private final static String CLIENT_SECRET = "";
+	//private final static String RDIRECT_URI = "";
 	private final static String SESSION_STATE = "ouath_state";
 	/*프로필 조회 API URL - 사용자 이름*/
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
@@ -56,14 +65,13 @@ public class NaverLoginController {
 		String sessionState = getSession(session);
 		
 		if(StringUtils.pathEquals(sessionState, state)) {
-			
 			OAuth20Service oauthService = new ServiceBuilder()
 					.apiKey(CLIENT_ID)
 					.apiSecret(CLIENT_SECRET)
 					.callback(RDIRECT_URI)
 					.state(state)
 					.build(NaverLoginApi.instance());
-			//Scribe 외
+			/* Scribe 외부모듈에서 제공하는 기능으로 AccessToken을 획득 */
 			OAuth2AccessToken accessToken = oauthService.getAccessToken(code);
 			return accessToken;//인증받은 토큰정보를 반환함.
 		}

@@ -4,7 +4,6 @@ import com.github.scribejava.core.builder.api.BaseApi;
 import com.github.scribejava.core.builder.api.DefaultApi20;
 
 public class NaverLoginApi extends DefaultApi20{
-
 	@Override
 	public String getAccessTokenEndpoint() {
 		// OATH 2.0 인증체크 네이버 API주소가 endpoint(아래)

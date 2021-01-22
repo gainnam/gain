@@ -42,10 +42,10 @@ public class LoginController {
 	//로그인 후 세션 처리 매핑 - 네이버 아이디 로그인 로직일 때
 	//session(인증토큰정보), state(유효성검증용 UUID정보), code(인증성공/실패 코드 예, 200OKm 401 Error)
 	@RequestMapping(value="/login_callback", method= {RequestMethod.GET, RequestMethod.POST})
-	public String login_callback(Model model,@RequestParam String code, @RequestParam String state, HttpSession sessison, RedirectAttributes rdat) throws IOException, ParseException {
+	public String login_callback(Model model,@RequestParam String code, @RequestParam String state, HttpSession session, RedirectAttributes rdat) throws IOException, ParseException {
 		
 		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginController.getAccessToken(sessison, code, state);
+		oauthToken = naverLoginController.getAccessToken(session, code, state);
 		//네이버로 로그인한 사용자 정보(profile)을 읽어온다(아래)
 		String apiResult = naverLoginController.getUserProfile(oauthToken);//이름, 이메일 자료
 		// 위 String형 apiResult값을 json형태로 파싱합니다.(아래)
@@ -75,15 +75,16 @@ public class LoginController {
 			Authentication authentication = new UsernamePasswordAuthenticationToken(useremail, null, authorities);
 			SecurityContextHolder.getContext().setAuthentication(authentication);//인증정보 저장처리
 			//로그인 세션 변수 생성(아래)
-			sessison.setAttribute("session_enabled", true);
-			sessison.setAttribute("session_userid", useremail);
-			sessison.setAttribute("session_username", username);
+			session.setAttribute("session_enabled", true);
+			session.setAttribute("session_userid", useremail);
+			session.setAttribute("session_username", username);
+			rdat.addFlashAttribute("session_type", "SNS 아이디로 로그인");
 			rdat.addFlashAttribute("msg", "네이버 아이디로 로그인");
 		}else {
 			rdat.addFlashAttribute("param.msg", "fail");//login.jsp전용 메세지
 			return "redirect:/login";
 		}
-		return null;
+		return "redirect:/";
 	}
 	
 	//로그인 후 세션 처리 매핑 - 스프링 시큐리티 로그인 로직일 때
@@ -117,9 +118,11 @@ public class LoginController {
 			session.setAttribute("session_userid", userid);
 			session.setAttribute("session_levels", levels);
 			//상단까지의 세션변수는 스프링 시큐리티에서 기본 제공하는 변수
+			
 			//하단부터는 비지니스 로직에 따라서 우리 개발쪽에서 발생시키는 세션변수 시작
 			MemberVO memberVO = memberService.readMember(userid);
 			session.setAttribute("session_username", memberVO.getUser_name());
+			session.setAttribute("session_type", "normal");
 		}
 		rdat.addFlashAttribute("msg", "로그인");
 		return "redirect:/";
@@ -127,13 +130,26 @@ public class LoginController {
 	
 	//사용자 홈페이지 로그인 접근 매핑
 	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String login() throws Exception{
-		//BCrypt암호화 match 메서드으로 확인
+	public String login(Model model, HttpSession session) throws Exception{
+		//BCrypt암호화 match 메서드로 확인
+		/*
 				String rawPassword = "1234";
 				BCryptPasswordEncoder bcryptPasswordEncoder = new BCryptPasswordEncoder(10);
 				String bcryptPassword = bcryptPasswordEncoder.encode("1234");//예, user02 -> 암호화 처리됨
 				//System.out.println(bcryptPassword);
 				System.out.println("2가지 스트링을 매칭 참,거짓: " + bcryptPasswordEncoder.matches(rawPassword, bcryptPassword));
-		return "home/login";
+		*/
+		//네이버 아이디로 인증 URL을 생성하기 위해서 naverLoginController클래스의
+		//getAuthorizationUrl메서드를 호출 인증URL결과를 login.jsp로 보내줌
+		String naverAuthUrl = naverLoginController.GetAuthorizationUrl(session);
+		//https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
+				//redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
+		//네이버에 위 URL을 보내는 이유: 유효성 검증하기 위해서, state=UUID네이버에 값을 보냄
+		//반환할 때, state값을 받아서, 우리 tomcat서버의 UUID값과 비교해서 일치하면, 정상호출 인정 진행
+		//System.out.println("네이버:" + naverAuthUrl);
+		//매개변수 session의 용도는 인증Url메서드에서 setSession을 사용하기 위해서 보내줌.
+		model.addAttribute("url", naverAuthUrl);//네이버 인증요청 URL을 login.jsp로 보내는 변수
+		
+			return "home/login";
 	}
 }
