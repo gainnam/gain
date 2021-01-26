@@ -80,7 +80,7 @@ $(document).ready(function(){
 				<ul class="place_list box_inner clear">
 				<c:forEach var="boardVO" items="${board_list}" varStatus="status">
 					<c:if test="${status.count<=3}">
-					<li class="opacity_hover" ><a href="/home/board/board_view?bno=${boardVO.bno}&page=1">
+					<li class="opacity_hover" ><a href="/home/board/board_view?board_type=${boardVO.board_type}&bno=${boardVO.bno}&page=1">
 							<div style="height:270px; overflow:hidden">
 							<c:if test="${save_file_names[status.index] eq ''}">
 							<img class="img_topplace" src="/resources/home/img/no_image.png" alt="OOOO OOOOO" style="opacity:0.9;"/>
@@ -113,8 +113,8 @@ $(document).ready(function(){
 				<div class="bbs_line">
 					<h3><a href="/home/board/board_list">NOTICE</a></h3>
 					<ul class="notice_recent">
-					<c:forEach var="boardVO" items="${board_list}">
-						<li><a href="/home/board/board_view?bno=${boardVO.bno}&page=1">
+					<c:forEach var="boardVO" items="${notice_list}">
+						<li><a href="/home/board/board_view?board_type=${boardVO.board_type}&bno=${boardVO.bno}&page=1">
 						<c:out value="${boardVO.title}" />
 						</a></li>
 					</c:forEach>

@@ -24,12 +24,11 @@ public class BoardVO {
 	
 	@Override
 	public String toString() {
-		return "디버그용 BoardVO [bno=" + bno + ", title=" + title + ", content=" + content + ", writer=" + writer + ", regdate="
-				+ reg_date + ", update_date=" + update_date + ", view_count=" + view_count + ", reply_count="
-				+ reply_count + "]";
+		return board_type;
 		
 	}
 	public String getBoard_type() {
+		//this.board_type = "gallery";//세션으로 저장된 값 사용할 예정
 		return board_type;
 	}
 	public void setBoard_type(String board_type) {

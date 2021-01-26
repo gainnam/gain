@@ -26,6 +26,7 @@
 
     <!-- 본문내용 Main content -->
     <section class="content">
+    
       <div class="container-fluid">
         
         <div class="row"><!-- 부트스트랩의 디자인 클래스 row -->
@@ -39,6 +40,14 @@
                 <h3 class="card-title">UPDATE Board</h3>
               </div>
               <!-- /.card-header -->
+              <div class="form-group">
+              <label for="board_type">게시판타입</label>
+              <select name="board_type" id="board_type" class="form-control">
+              <c:forEach items="${board_type_list}" var="boardTypeVO">
+              	<option value="${boardTypeVO.board_type}"<c:out value="${(session_board_type eq boardTypeVO.board_type)?'selected':''}" />>${boardTypeVO.board_name}</option>
+              </c:forEach>
+              </select>
+              </div>
               
                 <div class="card-body">
                   <div class="form-group">
@@ -102,6 +111,7 @@
         </div>
         
       </div><!-- /.container-fluid -->
+    
     </section>
     <!-- /.content -->
   </div>
