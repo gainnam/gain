@@ -108,11 +108,14 @@ public class DataSourceTest {
 	@Test
 	public void insertBoard() throws Exception {
 		BoardVO boardVO = new BoardVO();
+		boardVO.setBoard_type("gallery");
 		boardVO.setTitle("더미게시물");
 		boardVO.setContent("더미 내용");
 		boardVO.setWriter("일반사용자");
+		Date reg_date = new Date();
+		boardVO.setReg_date(reg_date);
 		//boardVO.setBno(프라이머리키);
-		for(int cnt=0;cnt<=100;cnt++) {//더미게시물 100개입력
+		for(int cnt=0;cnt<=0;cnt++) {//더미게시물 100개입력
 			boardDAO.insertBoard(boardVO);
 		}
 	}
@@ -144,8 +147,8 @@ public class DataSourceTest {
 	public void selectMember() throws Exception {
 		//"user_name","홍길동"
 		PageVO pageVO = new PageVO();
-		pageVO.setSearch_type("user_name");
-		pageVO.setSearch_keyword("홍길동");
+		pageVO.setSearch_type("user_id");
+		pageVO.setSearch_keyword("admin");
 		//아래 초기 페이징처리에 필요한 필수값 저장
 		pageVO.setPage(1);
 		pageVO.setPerPageNum(5);// 리스트하단에 보이는 페이징번호의 개수

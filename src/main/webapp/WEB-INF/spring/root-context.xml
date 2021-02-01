@@ -11,44 +11,50 @@
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
-	<!-- 전역변수 설정 파일 불러오기 local, prod용 properties class 사용 -->
+	<!-- 전역변수 설정 파일 불러오기 local용, prod용 propertyConfiguerer 클래스 사용 -->
 	<bean id="propertyConfigurer"
         class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-            	<!-- 로컬 개발일 때 사용 -->
+            	<!-- 로컬 개발일때 사용(아래) -->
+                <!-- 
+                <value>classpath:/properties/local.properties</value> 
+                 -->
+                <!-- 운영서버 배포일때 사용 -->
                 
-                <value>classpath:/properties/local.properties</value>
-                
-                <!-- 운영 서버(배포)일 때 사용 -->
-                <!--  
                 <value>classpath:/properties/prod.properties</value>
-                  -->
+                
+                
+                <!-- Junit실행시 에러나서 NaverLoginController놔두고 여기에도 위치 추가 -->
+                <value>classpath:/properties/sns.properties</value>
             </list>
         </property>
     </bean>
 	<!-- 알리아스(Alias)별칭인 dataSource을 만들어서 사용할 수도 있음.(junit테스트에서 dataSource변수사용가능하게 처리) -->
 	<alias name="dataSource-${DbType}" alias="dataSource" />
 	
-<!-- HSQLDB FILE기반 사용 헤로쿠에 올릴때 생성경로는 /tmp/embeded/hsql_file.db;hsqldb.lock_file=false , 로컬PC일때 경로는 c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false -->   	
+	<!-- HSQLDB FILE기반 사용 헤로쿠에 올릴때 생성경로는 /tmp/embeded/hsql_file.db;hsqldb.lock_file=false , 로컬PC일때 경로는 c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false -->   
+	
 	<bean id="dataSource-hsql_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
 		<property name="url" value="jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
+	
 	<bean id="dataSource-hsql_prod" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
 		<property name="url" value="jdbc:hsqldb:file:/tmp/embeded/hsql_file.db;hsqldb.lock_file=false" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
 	</bean>
-	<!-- CREATE TABLE 초기 1회만 실행 -->
-	<!-- 
+	
+	<!-- CREATE TABLE 초기 1회만 실행 단, 헤로쿠로 배포시 항상 주석 해제 후 배포합니다. -->
+	
 	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS"> 
 		<jdbc:script location="classpath:/db/embeded_hsql_file.sql" /> 
 	</jdbc:initialize-database>
-  -->
+	
 	<!-- jdbc:hsqldb:mem:dataSource / jdbc:hsqldb:file:c:/egov/workspace/embeded/hsql_file.db;hsqldb.lock_file=false -->
 	<!-- 테스트 실행용 DB매니저 실행:실제 사용시 아래 value - - 공백제거 하세요. -->
 	<!-- 
@@ -67,8 +73,8 @@
 		</list>
 	</property>
 	</bean>
-
 	 -->
+	
 	<!-- 로컬 mysql log4jdbc 설정전 -->
 	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
@@ -87,8 +93,9 @@
 		<property name="username" value="${DbUserName}"></property>
 		<property name="password" value="${DbPassword}"></property>
 	</bean>
-	 
+	
 	<!-- 로컬 oracle log4jdbc 드라이버 설정(아래) -->
+	
 	<bean id="dataSource-oracle_local" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" 
 				  value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
@@ -97,6 +104,7 @@
 		<property name="username" value="${DbUserName}"></property>
 		<property name="password" value="${DbPassword}"></property>
 	</bean>
+	
 	
 	<!--
 		DataSource 설정으로 JDBC 연결후, MyBatis와 MySql을 연동시킴. 
@@ -151,9 +159,11 @@
 	        <list><ref bean="herokuJobTrigger" /></list>
 	    </property>
 	</bean>
+	
 	<!-- 업로드한 파일이 저장되는 위치: 로컬PC용 C:\\egov\\workspace\\upload -->
 	<!-- 헤로쿠용: /tmp --> 
 	<bean id="uploadPath" class="java.lang.String">
 	    <constructor-arg value="${UploadPath}" />
 	</bean>
+	
 </beans>
