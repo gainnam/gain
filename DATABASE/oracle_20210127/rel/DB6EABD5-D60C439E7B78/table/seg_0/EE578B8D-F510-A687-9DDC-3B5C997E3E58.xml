@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="EE578B8D-F510-A687-9DDC-3B5C997E3E58" name="TBL_ATTACH">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:22:39 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<ordsAlias>table_8</ordsAlias>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="SAVE_FILE_NAME" id="17217516-120E-8971-3A2C-B881D6C5C789">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<commentInRDBMS><![CDATA[UUID로 만들어지는 폴더에 저장되는 파일 이름]]></commentInRDBMS>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REAL_FILE_NAME" id="9B4C5FB1-769D-DFCC-CF8F-0BB9FE6D47D8">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:26:48 UTC</createdTime>
+<commentInRDBMS><![CDATA[실제 파일명 ex)한글파일명]]></commentInRDBMS>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<ownDataTypeParameters>255,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="REG_DATE" id="A98376E8-9E6A-FF98-53CD-808D161561FB">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT008</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="BNO" id="4A74554F-AD94-236A-AE6E-DF438C134313">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:32:38 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>11</dataTypePrecision>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="8C4D9F1E-0372-86FE-B434-CB186C46FC76" referredColumn="8B38F346-9AA5-A247-030C-6B7304EA3C67"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="56384BF2-B983-EE57-EA5F-9920E45ADFF4" name="TBL_ATTACH_PK">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="17217516-120E-8971-3A2C-B881D6C5C789"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="742FABFE-BB28-630D-2E42-E057B691126F" name="TBL_ATTACH_TBL_BOARD_FK">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:32:38 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4A74554F-AD94-236A-AE6E-DF438C134313"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

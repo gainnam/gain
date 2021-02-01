@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="TBL_ATTACH" directorySegmentName="seg_0" id="EE578B8D-F510-A687-9DDC-3B5C997E3E58">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:22:39 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<logging>YES</logging>
+<partitionedRowMovement>DISABLE</partitionedRowMovement>
+<temporaryChanged>false</temporaryChanged>
+<accessDriverType>oracle_loader</accessDriverType>
+<rejectLimit></rejectLimit>
+<columnProxies itemClass="oracle.dbtools.crest.model.design.storage.oracle.v12c.ColumnProxyOraclev12c">
+<ColumnProxy name="SAVE_FILE_NAME" id="17217516-120E-8971-3A2C-B881D6C5C789">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="BNO" id="4A74554F-AD94-236A-AE6E-DF438C134313">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:32:38 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REAL_FILE_NAME" id="9B4C5FB1-769D-DFCC-CF8F-0BB9FE6D47D8">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:26:48 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+<ColumnProxy name="REG_DATE" id="A98376E8-9E6A-FF98-53CD-808D161561FB">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ColumnProxy>
+</columnProxies>
+<foreignKeys>
+<ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="TBL_ATTACH_TBL_BOARD_FK" id="742FABFE-BB28-630D-2E42-E057B691126F">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:32:38 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+</ForeignKey>
+</foreignKeys>
+<primaryKeys>
+<PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="TBL_ATTACH_PK" id="56384BF2-B983-EE57-EA5F-9920E45ADFF4">
+<createdBy>User</createdBy>
+<createdTime>2021-01-27 03:24:09 UTC</createdTime>
+<ownerDesignName>oracle_20210127</ownerDesignName>
+<indexSort>SORTED</indexSort>
+</PrimaryKey>
+</primaryKeys>
+</TableProxyOraclev11g>

@@ -62,9 +62,9 @@
 									<!-- 필수입력 값은 html5에서 지원하는 유효성 검사중 required 속성을 사용해서 빈(null)값체크(유효성검사)를 합니다. -->
 								</div>
 								<div class="form-group">
-									<label for="writer">writer</label> <input type="text"
+									<label for="writer">writer</label> <input value="${session_username}" type="text"
 										class="form-control" name="writer" id="writer"
-										placeholder="작성자를 입력해 주세요" required>
+										placeholder="작성자를 입력해 주세요" readonly>
 								</div>
 								<div class="form-group" style="margin-bottom: 0px;">
 									<label>attach</label>
