@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FilenameUtils;
@@ -73,6 +74,27 @@ public class CommonController {
 
 	public void setUploadPath(String uploadPath) {
 		this.uploadPath = uploadPath;
+	}
+	
+	/*
+	 * 프로필 png파일 업로드 전용 메서드 구현
+	 */
+	public void profile_upload(String user_id, HttpServletRequest request, MultipartFile file) throws Exception {
+		//프로필 첨부파일 처리(아래)
+		//직접 접근이 가능한 경로에 프로필 업로드 폴더를 생성
+		String folderPath = request.getServletContext().getRealPath("/resources/profile");
+		File makeFolder = new File(folderPath);
+		if (!makeFolder.exists()) {
+			//프로필 폴더가 존재하지 않으면
+			makeFolder.mkdir();
+		}
+		if (file.getOriginalFilename() != null) {
+			//jsp에서 전송받은 파일이 있다면
+			byte[] in = file.getBytes();
+			String uploadFile = folderPath + "/" + user_id + "." + StringUtils.getFilenameExtension(file.getOriginalFilename());
+			File out = new File(uploadFile);
+			FileCopyUtils.copy(in, out);
+		}
 	}
 	
 	/**
